@@ -66,7 +66,7 @@ states.waiting_for_cluster = function()
 
   wait_time = wait_time + 1
   if (wait_time >= MAX_WAIT_TIME) then
-    current_state = "biased_exploration"
+    current_state = "returning_base" --"biased_exploration"
     robot.leds.set_all_colors(BIASED_EXPLORING_LED_COLOR)
     biased_time = 0
   end
@@ -87,6 +87,71 @@ states.biased_exploration = function()
     current_state = "exploring"
     robot.leds.set_all_colors(EXPLORING_LED_COLOR)
   end
+end
+
+-- Returning to base by executing phototaxis
+GAIN_FACTOR = 10
+states.returning_base = function()
+  
+  local light_force = phototaxis()
+  --log(polar_vector_to_string(light_force))
+  
+  local obstacle_force = obstacle_avoidance()
+  --log(polar_vector_to_string(obstacle_force))
+
+  local schemas = {light_force, obstacle_force}
+  local resultant = reduce_vec2_array_polar(schemas);
+  resultant.length = resultant.length / #schemas * GAIN_FACTOR
+  --log(polar_vector_to_string(resultant))
+  
+  velocity = restrain_velocity(to_differential_model(resultant)) 
+  --log("L " .. velocity.left)
+  --log("R " .. velocity.right)
+  
+  robot.wheels.set_velocity(velocity.left, velocity.right)
+  
+end
+
+-- Potential field: phototaxis
+-- It create an attracting field so the robot can return to the base
+-- The attraction increases proportionally to the distance for the light source
+function phototaxis()
+
+  max_light = 0
+  max_light_idx = -1
+  for i=1, #robot.light do
+    local v = robot.light[i].value
+    if v > max_light then
+      max_light = v
+      max_light_idx = i
+    end
+  end
+
+  return {
+    length = 1 - robot.light[max_light_idx].value, 
+    angle = robot.light[max_light_idx].angle
+  }
+ 
+end
+
+-- Potential field: obstacle avoidance
+-- It creates a tangential field so the robot can circumnavigate it
+function obstacle_avoidance()
+  
+  local forces = {}
+  for i=1, #robot.proximity do
+    local prox = robot.proximity[i]
+    forces[i] = {
+      length = prox.value,
+      angle = prox.angle - PI / 2 -- -PI/2 makes the perpendicular direction 
+    }
+  end
+
+  local summation = reduce_vec2_array_polar(forces)
+  return {
+    length = summation.length / #forces, 
+    angle = summation.angle
+  }
 end
 
 ---- Utilities ----
@@ -134,6 +199,16 @@ function count_RAB(channel)
     end
   end
   return number_robot_sensed
+end
+
+-- Reduce an array of polar vectors by summing them
+function reduce_vec2_array_polar(array)
+    
+  local res = vector.zero()
+  for i=1, #array do
+    res = vector.vec2_polar_sum(res, array[i])
+  end
+  return res
 end
 
 -- Nice representation of a polar vector
