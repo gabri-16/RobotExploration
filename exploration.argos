@@ -17,12 +17,12 @@
   <!-- *************** -->
   <controllers>
 
-   <lua_controller id="swarm">
+  <lua_controller id="swarm">
 
     <actuators>
-        <differential_steering implementation="default" noise_level="0.0"/>
-    	 <range_and_bearing implementation="default" />
-        <leds implementation="default" medium="leds" />
+      <differential_steering implementation="default" noise_level="0.0"/>
+      <range_and_bearing implementation="default" />
+      <leds implementation="default" medium="leds" />
 	</actuators>
     
 	<sensors>
@@ -36,8 +36,23 @@
     
 	<params script="exploration.lua" />
 	
-	</lua_controller>
+  </lua_controller>
+	
+  <lua_controller id="landmark">
+
+    <actuators>
+      <range_and_bearing implementation="default"/>
+      <leds implementation="default" medium="leds"/>
+    </actuators>
     
+	<sensors>
+      <range_and_bearing implementation="medium" medium="rab" />
+	</sensors>
+    
+	<params script="landmark.lua" />
+	
+  </lua_controller>
+  
   </controllers>
  
 
@@ -73,28 +88,48 @@
     <distribute>
       <position method="uniform" min="-2,-2,0" max="2,2,0" />
       <orientation method="uniform" min="0,0,0" max="360,0,0" />
-      <entity quantity="20" max_trials="100">
+      <entity quantity="5" max_trials="100">
         <box id="o" size="0.2, 0.2, 0.2" movable="false" />
       </entity>
     </distribute>
    
     <!-- Robots -->
-<!--
     <distribute>
-      <position method="uniform" min="-0.4,-0.4,0" max="0.4,0.4, 0" />
+      <position method="uniform" min="-0.5,-0.5,0" max="0.5,0.5, 0" />
       <orientation method="uniform" min="0,0,0" max="360,0,0" />
-      <entity quantity= "1" max_trials="100">
+      <entity quantity= "10" max_trials="100">
         <foot-bot id="fb">
           <controller config="swarm" />
         </foot-bot>
       </entity>
     </distribute>
--->    
-   
+    
+   <!--
     <foot-bot id="fb_0">
       <body position="0,0,0" orientation="-90,0,0"/>
        <controller config="swarm"/>
-    </foot-bot>       
+    </foot-bot>
+    -->
+    
+    <foot-bot id="landmark_N">
+       <body position="1.5,0,0" orientation="0,0,0"/>
+       <controller config="landmark"/>
+    </foot-bot>
+    
+     <foot-bot id="landmark_E">
+       <body position="0,-1.5,0" orientation="0,0,0"/>
+       <controller config="landmark"/>
+    </foot-bot>
+    
+     <foot-bot id="landmark_S">
+       <body position="-1.5,0,0" orientation="0,0,0"/>
+       <controller config="landmark"/>
+    </foot-bot>
+        
+     <foot-bot id="landmark_W">
+       <body position="0,1.5,0" orientation="0,0,0"/>
+       <controller config="landmark"/>
+    </foot-bot>
     
   </arena>
  
