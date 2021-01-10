@@ -17,6 +17,7 @@ EXPLORING_LED_COLOR = "green"
 BIASED_EXPLORING_LED_COLOR = "orange"
 WAITING_LED_COLOR = "yellow"
 RETURNING_BASE_LED_COLOR = "blue"
+RECONNAISSANCE_LED_COLOR = "lightblue"
 
 -- Range and bearing
 MAX_SENSING_RANGE = 50
@@ -109,9 +110,21 @@ states.waiting_for_cluster = function()
 
   wait_time = wait_time + 1
   if (wait_time >= MAX_WAIT_TIME) then
-    current_state = "returning_base" --"biased_exploration"
+    current_state = "reconnaissance"
+    robot.leds.set_all_colors(RECONNAISSANCE_LED_COLOR)
+    reconnaissance_time = 0
+  end
+end
+
+reconnaissance_time = 0
+RECONNAISSANCE_LEGNTH = 20
+states.reconnaissance = function()
+
+  reconnaissance_time = reconnaissance_time + 1
+  
+  if reconnaissance_time > RECONNAISSANCE_LEGNTH then
+    current_state = "returning_base"
     robot.leds.set_all_colors(RETURNING_BASE_LED_COLOR)
-    biased_time = 0
   end
 end
 
