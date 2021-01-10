@@ -28,6 +28,7 @@ LANDMARK_EXPLORED_NOTIFICATION_CHANNEL = 2
 WHITE_GROUND_THRESHOLD = 0.5
 
 -- Probabilities --
+t = 0 -- Time elapsed in the current state
 
 -- Calculate the probability the robot has to start exploration.
 -- The probability increases proportionally to the time already spent resting.
@@ -61,25 +62,23 @@ current_state = "resting" -- It will be the strating state too
 local states = {}
 
 -- Waiting in base
-rest_time = 0
 states.resting = function()
 
-  local start_exploring_cond = math.random() < start_exploring_p(rest_time)
-  -- log("t " .. rest_time .. " p " .. start_exploring_p(rest_time)) 
+  local start_exploring_cond = math.random() < start_exploring_p(t)
+  -- log("t " .. t .. " p " .. start_exploring_p(t)) 
   
   if start_exploring_cond then
     current_state = "exploring"
     robot.leds.set_all_colors(EXPLORING_LED_COLOR)
-    exploring_time = 0
+    t = 0
   end
-  rest_time = ternary(start_exploring_cond, 0, rest_time + 1)
+  t = ternary(start_exploring_cond, 0, t + 1)
 end
 
 -- Explore the arena and look for any not already explored landmark
-exploring_time = 0
 states.exploring = function()
   
-  exploring_time = exploring_time + 1
+  t = t + 1
 
   velocity = vector.zero()
   velocity.length = CRUISE_VELOCITY
@@ -92,12 +91,12 @@ states.exploring = function()
     current_state = "waiting_for_cluster"
     robot.wheels.set_velocity(0, 0)
     robot.leds.set_all_colors(WAITING_LED_COLOR) 
-    wait_time = 0
+    t = 0
   else 
     if (math.random() < quit_exploring_p(exploring_time)) then
       current_state = "returning_base"
       robot.leds.set_all_colors(RETURNING_BASE_LED_COLOR)
-      biased_time = 0
+      t = 0
     else
       robot.wheels.set_velocity(velocity.left, velocity.right)
     end
@@ -105,34 +104,31 @@ states.exploring = function()
 end
 
 -- Wait for cluster to be completed
-wait_time = 0
 MAX_WAIT_TIME = 10
 states.waiting_for_cluster = function()
 
-  wait_time = wait_time + 1
-  if (wait_time >= MAX_WAIT_TIME) then
+  t = t + 1
+  if (t >= MAX_WAIT_TIME) then
     current_state = "reconnaissance"
     robot.leds.set_all_colors(RECONNAISSANCE_LED_COLOR)
-    reconnaissance_time = 0
+    t = 0
   end
 end
 
 -- The robots "explore" the area near the landmark before heading back to the base
-reconnaissance_time = 0
 RECONNAISSANCE_LEGNTH = 20
 states.reconnaissance = function()
 
-  reconnaissance_time = reconnaissance_time + 1
-  robot.range_and_bearing.set_data(LANDMARK_EXPLORED_NOTIFICATION_CHANNEL, 1)
+  t = t + 1
+  robot.range_and_bearing.set_data(2, 1)
   
-  if reconnaissance_time > RECONNAISSANCE_LEGNTH then
+  if t > RECONNAISSANCE_LEGNTH then
     current_state = "returning_base"
     robot.leds.set_all_colors(RETURNING_BASE_LED_COLOR)
   end
 end
 
 -- Exploration without considering any landmark 
-biased_time = 0
 MAX_BIASED_TIME = 100
 states.biased_exploration = function()
 
@@ -142,8 +138,8 @@ states.biased_exploration = function()
   velocity = restrain_velocity(to_differential_model(velocity)) 
   robot.wheels.set_velocity(velocity.left, velocity.right)
   
-  biased_time = biased_time + 1
-  if (biased_time >= MAX_BIASED_TIME) then
+  t = t + 1
+  if (t >= MAX_BIASED_TIME) then
     current_state = "exploring"
     robot.leds.set_all_colors(EXPLORING_LED_COLOR)
   end
@@ -174,7 +170,7 @@ states.returning_base = function()
       robot.wheels.set_velocity(0, 0) 
       current_state = "resting"
       robot.leds.set_all_colors(RESTING_LED_COLOR)
-      rest_time = 0
+      t = 0
   end
       
 end
@@ -307,19 +303,11 @@ end
 
 t_t = 0
 n = 2
-function step()
+function step() 
   
-  v = math.atan(t_t / 50) * ((3 - n) / 10)
-  --log("lc n ".. n .. "p " .. v)
-  t_t = t_t + 1
-  
-  -- Check if near landmark
+  -- Preprocess input
   near_landmark = count_RAB(LANDMARK_SIGNAL_CHANNEL) > 0
-
-  -- Check if it is in the base
-  in_base = is_in_base()
   
-  -- Check if near to any obstacle
   near_obstacle = false
   for i=1, #robot.proximity do
     if robot.proximity[i].value > 0.9 then 
@@ -327,10 +315,11 @@ function step()
     end
   end
   
-  -- Retrieve robot orientation
+  in_base = is_in_base()
+  
   robot_orientation = retrieve_robot_orientation()
   
-  -- Select behavior depending on my state
+  -- Select behavior depending on the current state
   states[current_state]()
 end
 

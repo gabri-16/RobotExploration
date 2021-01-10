@@ -3,7 +3,7 @@ NOT_EXPLORED_LED_COLOR = "red"
 EXPLORED_LED_COLOR = "green"
 
 -- Range and bearing
-MAX_SENSING_RANGE = 20
+MAX_SENSING_RANGE = 50
 LANDMARK_SIGNAL_CHANNEL = 1
 LANDMARK_EXPLORED_NOTIIFICATION_CHANNEL = 2
 
@@ -16,6 +16,8 @@ local states = {}
 states.not_explored = function()
 
   robot.range_and_bearing.set_data(LANDMARK_SIGNAL_CHANNEL, 1)
+
+  explored = count_RAB(LANDMARK_EXPLORED_NOTIIFICATION_CHANNEL) > 0
   if (explored) then
     current_state = "explored"
     robot.leds.set_all_colors(EXPLORED_LED_COLOR)
@@ -24,7 +26,7 @@ end
 
 -- Explored
 states.explored = function()
-  pass()  
+  robot.range_and_bearing.set_data(LANDMARK_SIGNAL_CHANNEL, 0)  
 end
 
 ---- Utilities ----
@@ -52,9 +54,7 @@ function init()
 end
 
 function step()
- 
-  explored = count_RAB(LANDMARK_EXPLORED_NOTIIFICATION_CHANNEL)
-
+   
   -- Select behavior depending on my state
   states[current_state]()
 end
