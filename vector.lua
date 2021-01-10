@@ -54,4 +54,21 @@ function vector.vec2_polar_sum(v1, v2)
 	return v3	
 end
 
+-- Reduce an array of polar vectors by summing them
+function reduce_vec2_array_polar(array)
+  
+  local res = vector.zero()
+  for i=1, #array do
+    res = vector.vec2_polar_sum(res, array[i])
+  end
+  return res
+end
+
+-- Nice representation of a polar vector
+function polar_vector_to_string(vector)
+  return "length: " .. vector.length .. "; angle: " .. vector.angle
+end
+
 return vector
+
+

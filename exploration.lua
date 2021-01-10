@@ -1,4 +1,7 @@
 local vector = require "vector"
+require "shared_vars"
+require "motor_schema"
+require "utilities"
 
 -- Velocity
 
@@ -18,11 +21,6 @@ BIASED_EXPLORING_LED_COLOR = "orange"
 WAITING_LED_COLOR = "yellow"
 RETURNING_BASE_LED_COLOR = "blue"
 RECONNAISSANCE_LED_COLOR = "brown"
-
--- Range and bearing
-MAX_SENSING_RANGE = 50
-LANDMARK_SIGNAL_CHANNEL = 1
-LANDMARK_EXPLORED_NOTIFICATION_CHANNEL = 2 
 
 -- Motor ground
 WHITE_GROUND_THRESHOLD = 0.5
@@ -58,10 +56,9 @@ end
 
 ---- States ----
 current_state = "resting" -- It will be the strating state too
+states = {}
 
-local states = {}
-
--- Waiting in base
+-- Waiting in base and start randomly start exploration
 states.resting = function()
 
   local start_exploring_cond = math.random() < start_exploring_p(t)
@@ -175,124 +172,6 @@ states.returning_base = function()
       
 end
 
----- Potential fields ----
-
--- Potential field: phototaxis
--- It create an attracting field so the robot can return to the base
--- The attraction increases proportionally to the distance for the light source
-function phototaxis()
-
-  max_light = 0
-  max_light_idx = -1
-  for i=1, #robot.light do
-    local v = robot.light[i].value
-    if v > max_light then
-      max_light = v
-      max_light_idx = i
-    end
-  end
-
-  return {
-    length = 1 - robot.light[max_light_idx].value, 
-    angle = robot.light[max_light_idx].angle
-  }
- 
-end
-
--- Potential field: obstacle avoidance
--- It creates a tangential field so the robot can circumnavigate it
-function obstacle_avoidance()
-  
-  local forces = {}
-  for i=1, #robot.proximity do
-    local prox = robot.proximity[i]
-    forces[i] = {
-      length = prox.value,
-      angle = prox.angle - PI / 2 -- -PI/2 makes the perpendicular direction 
-    }
-  end
-
-  local summation = reduce_vec2_array_polar(forces)
-  return {
-    length = summation.length / #forces, 
-    angle = summation.angle
-  }
-end
-
----- Utilities ----
-
-function ternary(cond, T, F)
-  if cond then return T else return F end
-end
-
--- Convert a polar vector representing a perceived force the differential model
--- (length, angle) -> (velocity left, velocity right) 
-function to_differential_model(force)
- return {
-   left = force.length - WHEELS_DISTANCE * force.angle,
-   right = force.length + WHEELS_DISTANCE * force.angle
-  }
-end
-
--- Bring velocity back to range [MIN_VELOCITY, MAX_VELOCITY] 
-function restrain_velocity(velocity)
-
-  local restrained_v = velocity
-  restrained_v.left = math.max(restrained_v.left, MIN_VELOCITY)   
-  restrained_v.left = math.min(restrained_v.left, MAX_VELOCITY)
-  restrained_v.right = math.max(restrained_v.right, MIN_VELOCITY)
-  restrained_v.right = math.min(restrained_v.right, MAX_VELOCITY)
-  return restrained_v
-end
-
--- Get robot orientation angle in radiants
-function retrieve_robot_orientation()
-    local orientationString = tostring(robot.positioning.orientation)
-    -- Drop decimal part so it can be converted to a Lua number using "tonumber" function
-    local i, _ = string.find(orientationString, ",", 1) 
-    local int_orientation_value = tonumber(string.sub(orientationString, 1, i-1))
-    return math.rad(int_orientation_value)
-end
-
--- Count the number of stopped robots sensed close to the items sensed on a given channel
-function count_RAB(channel)
-  number_robot_sensed = 0
-  for i = 1, #robot.range_and_bearing do
-    -- for each robot seen, check they it is close enough
-    if robot.range_and_bearing[i].range < MAX_SENSING_RANGE and robot.range_and_bearing[i].data[channel] == 1 then
-      number_robot_sensed = number_robot_sensed + 1
-    end
-  end
-  return number_robot_sensed
-end
-
--- Check if a robot is in the base
-function is_in_base()
-  max = 0
-  for i = 1, #robot.motor_ground do
-    v = robot.motor_ground[i].value
-    if (v > max) then
-      max = v
-    end  
-  end
-  return max <= WHITE_GROUND_THRESHOLD
-end
-
--- Reduce an array of polar vectors by summing them
-function reduce_vec2_array_polar(array)
-  
-  local res = vector.zero()
-  for i=1, #array do
-    res = vector.vec2_polar_sum(res, array[i])
-  end
-  return res
-end
-
--- Nice representation of a polar vector
-function polar_vector_to_string(vector)
-  return "length: " .. vector.length .. "; angle: " .. vector.angle
-end
-
 ---- Core ----
 
 function init()
@@ -300,9 +179,6 @@ function init()
   robot.leds.set_all_colors(RESTING_LED_COLOR)
 end
 
-
-t_t = 0
-n = 2
 function step() 
   
   -- Preprocess input
@@ -328,5 +204,5 @@ function reset()
 end
 
 function destroy()
-   -- put your code here
+   pass()
 end
