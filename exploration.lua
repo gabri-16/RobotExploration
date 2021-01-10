@@ -22,6 +22,7 @@ RECONNAISSANCE_LED_COLOR = "brown"
 -- Range and bearing
 MAX_SENSING_RANGE = 50
 LANDMARK_SIGNAL_CHANNEL = 1
+LANDMARK_EXPLORED_NOTIFICATION_CHANNEL = 2 
 
 -- Motor ground
 WHITE_GROUND_THRESHOLD = 0.5
@@ -122,6 +123,7 @@ RECONNAISSANCE_LEGNTH = 20
 states.reconnaissance = function()
 
   reconnaissance_time = reconnaissance_time + 1
+  robot.range_and_bearing.set_data(LANDMARK_EXPLORED_NOTIFICATION_CHANNEL, 1)
   
   if reconnaissance_time > RECONNAISSANCE_LEGNTH then
     current_state = "returning_base"
