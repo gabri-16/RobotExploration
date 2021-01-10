@@ -2,11 +2,13 @@ local vector = require "vector"
 require "shared_vars"
 require "motor_schema"
 require "utilities"
+require "swarm_intelligence"
+
+---- Global vars ----
 
 -- Velocity
-
-MIN_VELOCITY = -10
-MAX_VELOCITY = 10
+MIN_VELOCITY = -15
+MAX_VELOCITY = 15
 CRUISE_VELOCITY = 10
 
 left_v, right_v = 0 -- Velocity of left and right wheels
@@ -14,45 +16,26 @@ left_v, right_v = 0 -- Velocity of left and right wheels
 WHEELS_DISTANCE = robot.wheels.axis_length / 2 -- 7
 PI = math.pi
 
--- Leds color
+-- Led colors
 RESTING_LED_COLOR = "red"
 EXPLORING_LED_COLOR = "green"
-BIASED_EXPLORING_LED_COLOR = "orange"
+BIASED_EXPLORING_LED_COLOR = "black"
 WAITING_LED_COLOR = "yellow"
+RECONNAISSANCE_LED_COLOR = "white"
 RETURNING_BASE_LED_COLOR = "blue"
-RECONNAISSANCE_LED_COLOR = "brown"
 
--- Motor ground
-WHITE_GROUND_THRESHOLD = 0.5
+-- Range and bearing
+NEIGHBOR_SIGNAL_CHANNEL = 3
+NEIGHBOR_SENSING_RANGE = LANDMARK_SENSING_RANGE * 2 + 5
 
--- Probabilities --
+-- Others 
 t = 0 -- Time elapsed in the current state
+GAIN_FACTOR = 10 -- Motor schema
+WHITE_GROUND_THRESHOLD = 0.5 -- Motor ground
 
--- Calculate the probability the robot has to start exploration.
--- The probability increases proportionally to the time already spent resting.
--- t = 0 => p = 0, t -> +inf => p -> 1
-START_EXPLORATION_DELAY_FACTOR = 1000
-function start_exploring_p(t)
-  return math.atan(t / START_EXPLORATION_DELAY_FACTOR) -- 1 - (1 / (t + 1))
-end
-
---
---
-function join_cluster_p(t)
-  pass()
-end
-
---
---
-function leave_cluster_p(t, n)
-  return math.atan(t / 50) * ((3 - n) / 10)
-end
-
--- Calculate the probability to quit exploration and return to the base
---
-function quit_exploring_p(t)
-  return 0.001
-end
+RECONNAISSANCE_LEGNTH = 20
+BIASED_EXPLORATION_LENGTH = 100
+MAX_WAIT_TIME = 10
 
 ---- States ----
 current_state = "resting" -- It will be the strating state too
@@ -61,7 +44,7 @@ states = {}
 -- Waiting in base and start randomly start exploration
 states.resting = function()
 
-  local start_exploring_cond = math.random() < start_exploring_p(t)
+  local start_exploring_cond = non_deterministic_transition(start_exploring_p(t))
   -- log("t " .. t .. " p " .. start_exploring_p(t)) 
   
   if start_exploring_cond then
@@ -69,6 +52,7 @@ states.resting = function()
     robot.leds.set_all_colors(EXPLORING_LED_COLOR)
     t = 0
   end
+  
   t = ternary(start_exploring_cond, 0, t + 1)
 end
 
@@ -77,20 +61,19 @@ states.exploring = function()
   
   t = t + 1
 
-  velocity = vector.zero()
-  velocity.length = CRUISE_VELOCITY
-  velocity.angle = ternary(near_obstacle, math.rad(math.random(0, 360)), 0)
-  velocity = restrain_velocity(to_differential_model(velocity)) 
-  --log("L " .. velocity.left)
-  --log("R " .. velocity.right)
- 
+  --velocity = vector.zero()
+  --velocity.length = CRUISE_VELOCITY
+  --velocity.angle = ternary(near_obstacle, math.rad(math.random(0, 360)), 0)
+  --velocity = restrain_velocity(to_differential_model(velocity)) 
+  velocity = ballistic_random_walk()
+  
   if (near_landmark) then 
     current_state = "waiting_for_cluster"
     robot.wheels.set_velocity(0, 0)
     robot.leds.set_all_colors(WAITING_LED_COLOR) 
     t = 0
   else 
-    if (math.random() < quit_exploring_p(exploring_time)) then
+    if non_deterministic_transition(quit_exploring_p(exploring_time)) then
       current_state = "returning_base"
       robot.leds.set_all_colors(RETURNING_BASE_LED_COLOR)
       t = 0
@@ -101,23 +84,33 @@ states.exploring = function()
 end
 
 -- Wait for cluster to be completed
-MAX_WAIT_TIME = 10
 states.waiting_for_cluster = function()
 
   t = t + 1
-  if (t >= MAX_WAIT_TIME) then
+  
+  robot.range_and_bearing.set_data(NEIGHBOR_SIGNAL_CHANNEL, 1)
+  log("a")
+  if n_neighbors >= EXPECTED_CLUSTER_SIZE - 1  then -- or not near_landmark
     current_state = "reconnaissance"
     robot.leds.set_all_colors(RECONNAISSANCE_LED_COLOR)
     t = 0
+  else
+    log("t " .. t .. "; p " .. leave_cluster_p(t, n_neighbors + 1))
+    if non_deterministic_transition(leave_cluster_p(t, n_neighbors + 1)) then
+      current_state = "biased_exploration"
+      robot.leds.set_all_colors(BIASED_EXPLORING_LED_COLOR)
+      t = 0
+    end
   end
 end
 
 -- The robots "explore" the area near the landmark before heading back to the base
-RECONNAISSANCE_LEGNTH = 20
 states.reconnaissance = function()
 
   t = t + 1
-  robot.range_and_bearing.set_data(2, 1)
+  
+  robot.range_and_bearing.set_data(NEIGHBOR_SIGNAL_CHANNEL, 1)
+  robot.range_and_bearing.set_data(LANDMARK_EXPLORED_NOTIIFICATION_CHANNEL, 1)
   
   if t > RECONNAISSANCE_LEGNTH then
     current_state = "returning_base"
@@ -126,24 +119,20 @@ states.reconnaissance = function()
 end
 
 -- Exploration without considering any landmark 
-MAX_BIASED_TIME = 100
 states.biased_exploration = function()
 
-  velocity = vector.zero()
-  velocity.length = CRUISE_VELOCITY
-  velocity.angle = ternary(near_obstacle, math.rad(math.random(0, 360)), 0)
-  velocity = restrain_velocity(to_differential_model(velocity)) 
+  t = t + 1
+  
+  velocity = ballistic_random_walk()
   robot.wheels.set_velocity(velocity.left, velocity.right)
   
-  t = t + 1
-  if (t >= MAX_BIASED_TIME) then
+  if t >= BIASED_EXPLORATION_LENGTH then
     current_state = "exploring"
     robot.leds.set_all_colors(EXPLORING_LED_COLOR)
   end
 end
 
 -- Returning to base by executing phototaxis
-GAIN_FACTOR = 10
 states.returning_base = function()
   
   local light_force = phototaxis()
@@ -169,7 +158,17 @@ states.returning_base = function()
       robot.leds.set_all_colors(RESTING_LED_COLOR)
       t = 0
   end
-      
+end
+
+---- Random walk ----
+
+-- Ballistic random walk: go straight till an obstacle is perceived, then turn randomly
+function ballistic_random_walk()
+
+  velocity = vector.zero()
+  velocity.length = CRUISE_VELOCITY
+  velocity.angle = ternary(near_obstacle, math.rad(math.random(0, 360)), 0)
+  return restrain_velocity(to_differential_model(velocity))
 end
 
 ---- Core ----
@@ -182,7 +181,9 @@ end
 function step() 
   
   -- Preprocess input
-  near_landmark = count_RAB(LANDMARK_SIGNAL_CHANNEL) > 0
+  near_landmark = count_RAB(LANDMARK_SIGNAL_CHANNEL, LANDMARK_SENSING_RANGE) > 0
+  
+  n_neighbors = count_RAB(NEIGHBOR_SIGNAL_CHANNEL, NEIGHBOR_SENSING_RANGE)
   
   near_obstacle = false
   for i=1, #robot.proximity do

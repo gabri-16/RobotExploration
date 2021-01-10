@@ -15,7 +15,7 @@ states.not_explored = function()
 
   robot.range_and_bearing.set_data(LANDMARK_SIGNAL_CHANNEL, 1)
 
-  explored = count_RAB(LANDMARK_EXPLORED_NOTIIFICATION_CHANNEL) > 0
+  explored = count_RAB(LANDMARK_EXPLORED_NOTIIFICATION_CHANNEL, LANDMARK_SENSING_RANGE) > 0
   if (explored) then
     current_state = "explored"
     robot.leds.set_all_colors(EXPLORED_LED_COLOR)

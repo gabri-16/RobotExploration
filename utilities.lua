@@ -6,11 +6,11 @@ function ternary(cond, T, F)
 end
 
 -- Count the number of stopped robots sensed close to the items sensed on a given channel
-function count_RAB(channel)
+function count_RAB(channel, sensing_range)
   number_robot_sensed = 0
   for i = 1, #robot.range_and_bearing do
     -- for each robot seen, check they it is close enough
-    if robot.range_and_bearing[i].range < SENSING_RANGE and robot.range_and_bearing[i].data[channel] == 1 then
+    if robot.range_and_bearing[i].range < sensing_range and robot.range_and_bearing[i].data[channel] == 1 then
       number_robot_sensed = number_robot_sensed + 1
     end
   end
