@@ -89,13 +89,12 @@ states.waiting_for_cluster = function()
   t = t + 1
   
   robot.range_and_bearing.set_data(NEIGHBOR_SIGNAL_CHANNEL, 1)
-  log("a")
-  if n_neighbors >= EXPECTED_CLUSTER_SIZE - 1  then -- or not near_landmark
+
+  if n_neighbors >= EXPECTED_CLUSTER_SIZE - 1  then
     current_state = "reconnaissance"
     robot.leds.set_all_colors(RECONNAISSANCE_LED_COLOR)
     t = 0
   else
-    log("t " .. t .. "; p " .. leave_cluster_p(t, n_neighbors + 1))
     if non_deterministic_transition(leave_cluster_p(t, n_neighbors + 1)) then
       current_state = "biased_exploration"
       robot.leds.set_all_colors(BIASED_EXPLORING_LED_COLOR)
