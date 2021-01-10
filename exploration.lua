@@ -17,7 +17,7 @@ EXPLORING_LED_COLOR = "green"
 BIASED_EXPLORING_LED_COLOR = "orange"
 WAITING_LED_COLOR = "yellow"
 RETURNING_BASE_LED_COLOR = "blue"
-RECONNAISSANCE_LED_COLOR = "lightblue"
+RECONNAISSANCE_LED_COLOR = "brown"
 
 -- Range and bearing
 MAX_SENSING_RANGE = 50
@@ -116,6 +116,7 @@ states.waiting_for_cluster = function()
   end
 end
 
+-- The robots "explore" the area near the landmark before heading back to the base
 reconnaissance_time = 0
 RECONNAISSANCE_LEGNTH = 20
 states.reconnaissance = function()
