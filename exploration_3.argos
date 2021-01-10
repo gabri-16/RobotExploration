@@ -60,11 +60,11 @@
   <!-- * Arena configuration * -->
   <!-- *********************** -->
   <arena size="4, 4, 1" center="0,0,0.5" positional_grid_size="8,8,1">  
-  <floor id="f" source="image" path="arena.png" />
+  <floor id="f" source="image" path="arena_3.png" />
 
   <!-- Light -->
   <light id="light"
-           position="0, 0, 0.5"
+           position="0, -1.5, 0.5"
            orientation="0,0,0"
            color="yellow"
            intensity="1"
@@ -95,9 +95,9 @@
    
     <!-- Robots -->
     <distribute>
-      <position method="uniform" min="-0.5,-0.5,0" max="0.5,0.5, 0" />
+      <position method="uniform" min="-2, -2, 0" max="2, -1, 0" />
       <orientation method="uniform" min="0,0,0" max="360,0,0" />
-      <entity quantity= "15" max_trials="100">
+      <entity quantity= "30" max_trials="100">
         <foot-bot id="fb">
           <controller config="swarm" />
         </foot-bot>

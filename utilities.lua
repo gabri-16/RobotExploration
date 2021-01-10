@@ -1,9 +1,6 @@
 ---- Utilities ----
 
--- Ternary operator like
-function ternary(cond, T, F)
-  if cond then return T else return F end
-end
+---- Sensors preprocessing ----
 
 -- Count the number of stopped robots sensed close to the items sensed on a given channel
 function count_RAB(channel, sensing_range)
@@ -30,6 +27,19 @@ function is_in_base()
   return max <= WHITE_GROUND_THRESHOLD
 end
 
+function is_near_obstacle()
+
+  local obstacle = false
+  for i=1, #robot.proximity do
+    if robot.proximity[i].value > 0.9 then 
+      obstacle = true 
+    end
+  end
+  return obstacle
+end
+
+---- Actuators postprocessing ----
+
 -- Bring velocity back to range [MIN_VELOCITY, MAX_VELOCITY] 
 function restrain_velocity(velocity)
 
@@ -39,4 +49,11 @@ function restrain_velocity(velocity)
   restrained_v.right = math.max(restrained_v.right, MIN_VELOCITY)
   restrained_v.right = math.min(restrained_v.right, MAX_VELOCITY)
   return restrained_v
+end
+
+---- Miscellaneous ----
+
+-- Ternary operator like
+function ternary(cond, T, F)
+  if cond then return T else return F end
 end

@@ -33,7 +33,7 @@ t = 0 -- Time elapsed in the current state
 GAIN_FACTOR = 10 -- Motor schema
 WHITE_GROUND_THRESHOLD = 0.5 -- Motor ground
 
-RECONNAISSANCE_LEGNTH = 20
+RECONNAISSANCE_LENGTH = 20
 BIASED_EXPLORATION_LENGTH = 100
 MAX_WAIT_TIME = 10
 
@@ -111,7 +111,7 @@ states.reconnaissance = function()
   robot.range_and_bearing.set_data(NEIGHBOR_SIGNAL_CHANNEL, 1)
   robot.range_and_bearing.set_data(LANDMARK_EXPLORED_NOTIIFICATION_CHANNEL, 1)
   
-  if t > RECONNAISSANCE_LEGNTH then
+  if t > RECONNAISSANCE_LENGTH then
     current_state = "returning_base"
     robot.leds.set_all_colors(RETURNING_BASE_LED_COLOR)
   end
@@ -121,6 +121,8 @@ end
 states.biased_exploration = function()
 
   t = t + 1
+  
+  robot.range_and_bearing.set_data(NEIGHBOR_SIGNAL_CHANNEL, 1)
   
   velocity = ballistic_random_walk()
   robot.wheels.set_velocity(velocity.left, velocity.right)
@@ -134,21 +136,15 @@ end
 -- Returning to base by executing phototaxis
 states.returning_base = function()
   
+  robot.range_and_bearing.set_data(NEIGHBOR_SIGNAL_CHANNEL, 1)
+
   local light_force = phototaxis()
-  --log(polar_vector_to_string(light_force))
-  
   local obstacle_force = obstacle_avoidance()
-  --log(polar_vector_to_string(obstacle_force))
 
   local schemas = {light_force, obstacle_force}
   local resultant = reduce_vec2_array_polar(schemas);
   resultant.length = resultant.length / #schemas * GAIN_FACTOR
-  --log(polar_vector_to_string(resultant))
-  
-  velocity = restrain_velocity(to_differential_model(resultant)) 
-  --log("L " .. velocity.left)
-  --log("R " .. velocity.right)
-  
+  velocity = restrain_velocity(to_differential_model(resultant))   
   robot.wheels.set_velocity(velocity.left, velocity.right)
   
   if in_base then
@@ -184,12 +180,7 @@ function step()
   
   n_neighbors = count_RAB(NEIGHBOR_SIGNAL_CHANNEL, NEIGHBOR_SENSING_RANGE)
   
-  near_obstacle = false
-  for i=1, #robot.proximity do
-    if robot.proximity[i].value > 0.9 then 
-      near_obstacle = true 
-    end
-  end
+  near_obstacle = is_near_obstacle()
   
   in_base = is_in_base()
   
