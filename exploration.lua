@@ -14,16 +14,44 @@ PI = math.pi
 -- Leds color
 RESTING_LED_COLOR = "red"
 EXPLORING_LED_COLOR = "green"
-BIASED_EXPLORING_LED_COLOR = "blue"
+BIASED_EXPLORING_LED_COLOR = "orange"
 WAITING_LED_COLOR = "yellow"
+RETURNING_BASE_LED_COLOR = "blue"
 
 -- Range and bearing
 MAX_SENSING_RANGE = 50
 LANDMARK_SIGNAL_CHANNEL = 1
 
--- Probabilities
-START_EXPLORING_P = 0.1
+-- Motor ground
+WHITE_GROUND_THRESHOLD = 0.5
 
+-- Probabilities --
+
+-- Calculate the probability the robot has to start exploration.
+-- The probability increases proportionally to the time already spent resting.
+-- t = 0 => p = 0, t -> +inf => p -> 1
+START_EXPLORATION_DELAY_FACTOR = 1000
+function start_exploring_p(t)
+  return math.atan(t / START_EXPLORATION_DELAY_FACTOR) -- 1 - (1 / (t + 1))
+end
+
+--
+--
+function join_cluster_p(t)
+  pass()
+end
+
+--
+--
+function leave_cluster_p(t, n)
+  return math.atan(t / 50) * ((3 - n) / 10)
+end
+
+-- Calculate the probability to quit exploration and return to the base
+--
+function quit_exploring_p(t)
+  return 0.001
+end
 
 ---- States ----
 current_state = "resting" -- It will be the strating state too
@@ -31,17 +59,26 @@ current_state = "resting" -- It will be the strating state too
 local states = {}
 
 -- Waiting in base
+rest_time = 0
 states.resting = function()
+
+  local start_exploring_cond = math.random() < start_exploring_p(rest_time)
+  -- log("t " .. rest_time .. " p " .. start_exploring_p(rest_time)) 
   
-  if math.random() < START_EXPLORING_P then
+  if start_exploring_cond then
     current_state = "exploring"
     robot.leds.set_all_colors(EXPLORING_LED_COLOR)
+    exploring_time = 0
   end
+  rest_time = ternary(start_exploring_cond, 0, rest_time + 1)
 end
 
 -- Explore the arena and look for any not already explored landmark
+exploring_time = 0
 states.exploring = function()
   
+  exploring_time = exploring_time + 1
+
   velocity = vector.zero()
   velocity.length = CRUISE_VELOCITY
   velocity.angle = ternary(near_obstacle, math.rad(math.random(0, 360)), 0)
@@ -54,8 +91,14 @@ states.exploring = function()
     robot.wheels.set_velocity(0, 0)
     robot.leds.set_all_colors(WAITING_LED_COLOR) 
     wait_time = 0
-  else
-    robot.wheels.set_velocity(velocity.left, velocity.right)
+  else 
+    if (math.random() < quit_exploring_p(exploring_time)) then
+      current_state = "returning_base"
+      robot.leds.set_all_colors(RETURNING_BASE_LED_COLOR)
+      biased_time = 0
+    else
+      robot.wheels.set_velocity(velocity.left, velocity.right)
+    end
   end  
 end
 
@@ -67,11 +110,12 @@ states.waiting_for_cluster = function()
   wait_time = wait_time + 1
   if (wait_time >= MAX_WAIT_TIME) then
     current_state = "returning_base" --"biased_exploration"
-    robot.leds.set_all_colors(BIASED_EXPLORING_LED_COLOR)
+    robot.leds.set_all_colors(RETURNING_BASE_LED_COLOR)
     biased_time = 0
   end
 end
 
+-- Exploration without considering any landmark 
 biased_time = 0
 MAX_BIASED_TIME = 100
 states.biased_exploration = function()
@@ -110,7 +154,16 @@ states.returning_base = function()
   
   robot.wheels.set_velocity(velocity.left, velocity.right)
   
+  if in_base then
+      robot.wheels.set_velocity(0, 0) 
+      current_state = "resting"
+      robot.leds.set_all_colors(RESTING_LED_COLOR)
+      rest_time = 0
+  end
+      
 end
+
+---- Potential fields ----
 
 -- Potential field: phototaxis
 -- It create an attracting field so the robot can return to the base
@@ -201,9 +254,21 @@ function count_RAB(channel)
   return number_robot_sensed
 end
 
+-- Check if a robot is in the base
+function is_in_base()
+  max = 0
+  for i = 1, #robot.motor_ground do
+    v = robot.motor_ground[i].value
+    if (v > max) then
+      max = v
+    end  
+  end
+  return max <= WHITE_GROUND_THRESHOLD
+end
+
 -- Reduce an array of polar vectors by summing them
 function reduce_vec2_array_polar(array)
-    
+  
   local res = vector.zero()
   for i=1, #array do
     res = vector.vec2_polar_sum(res, array[i])
@@ -223,11 +288,21 @@ function init()
   robot.leds.set_all_colors(RESTING_LED_COLOR)
 end
 
+
+t_t = 0
+n = 2
 function step()
+  
+  v = math.atan(t_t / 50) * ((3 - n) / 10)
+  --log("lc n ".. n .. "p " .. v)
+  t_t = t_t + 1
   
   -- Check if near landmark
   near_landmark = count_RAB(LANDMARK_SIGNAL_CHANNEL) > 0
 
+  -- Check if it is in the base
+  in_base = is_in_base()
+  
   -- Check if near to any obstacle
   near_obstacle = false
   for i=1, #robot.proximity do
