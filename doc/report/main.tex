@@ -1,0 +1,72 @@
+\documentclass[12pt,a4paper,twoside,openright]{book}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{style/isi_style_lt}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{caption}
+\usepackage[usenames]{color}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{fancyvrb}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{listings}
+\usepackage{marvosym}
+\usepackage{multicol}
+\usepackage{sectsty}
+\usepackage{subcaption}
+\usepackage{tocloft}
+\usepackage[table]{xcolor}
+\usepackage{url}
+\usepackage{lmodern,textcomp}
+
+\input{style/settings.tex}
+
+\universita{Alma Mater Studiorum -- University of Bologna}
+
+\campus{Campus of Cesena}
+
+\scuola{Engineering and Architecture Faculty}
+
+\corsodilaurea{Master's Degree in Engineering and IT}
+
+\titolo{Robot Exploration}
+
+\materia{Intelligent Robotic Systems}
+
+\laureando{Gabriele Guerrini}
+
+\annoaccademico{2019 -- 2020}
+
+\makeindex
+
+\begin{document}
+
+\frontmatter 
+
+\maketitle
+
+\tableofcontents
+
+\mainmatter
+
+\pagestyle{fancy} 
+\fancyhead[LE,RO]{\thepage}
+\fancyfoot{}
+\raggedbottom
+	
+\input{1-project_goal.tex}
+\input{2-state_of_the_art.tex}
+\input{3-solution_development.tex}
+\input{4-performance_evaluation.tex}
+\input{5-conclusions.tex}
+	
+\backmatter	
+
+\input{bibliography.tex}
+
+\end{document}

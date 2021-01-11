@@ -1,0 +1,72 @@
+\chapter{State of the art}
+
+An overall of four different well-known tasks can be detected in the problem, namely:
+
+\begin{itemize}
+
+  \item \textbf{Arena exploration}: the robots must explore the arena to find the landmarks.
+  \item \textbf{Clustering}: the robots must create cluster near any landmark so it can be considered explored.
+  \item \textbf{Phototaxis}: used to allow the robots to easily come back to the base.
+  \item \textbf{Obstacle avoidance}: general behaviour to be executed to prevent any collision (between robots as well as between robots and obstacles/walls).
+
+\end{itemize}
+
+\noindent
+It follows a brief description of the state of the art for each type of task.
+
+\section{Arena exploration}
+
+The exploration of the area is a well-known task in the literature, and lots of algorithms and methodologies have been studied. However, when talking about swarm robotics, the main adopted method is the \textit{random walk} approach. This is mainly due to the usage of off-the-shelf robots that own limited individual abilities (low processing power, local sensing etc.). Nevertheless, the usage of a swarm of robots for exploration tasks is still widely applied thanks to the advantages it entails respect to the usage of a single robot (flexibility, robustness, scalability).
+
+\bigskip
+There are few different common sense implementations of a random walk task \cite{rw-summary}, namely:
+
+\begin{itemize}
+
+  \item {Brownian motion}
+  
+  \item {Lèvy Flight}
+  
+  \item {Lèvy Taxis}
+
+  \item {Correlated radom walk}
+
+  \item{Ballistic motion}  
+\end{itemize}
+ 
+The main idea is to randomly choose a direction and go straight till a new one is selected.
+
+\noindent
+All the aforementioned models share the same underlying mathematical model, and the different tuning of the parameters provides different behaviours and exploration capabilities. Only one exception can be identified, that is the ballistic motion, where the two parameters \textit{step length} ($\mu$) and \textit{turning angle} ($\rho$) are not provided and/or limited. 
+
+\bigskip
+Further from the above basic approaches, new solution have been probed to overcome the limits they impose. Indeed, there are two main problem that emerge, that is:
+
+\begin{itemize}
+
+  \item Execution of repeated exploration of the same point.
+  \item Exploration does not scale with arena widening. Ineed, just zona near the starting position will be quite well explored.
+ 
+\end{itemize}
+
+New approaches have been studied to overcome the aboe issues. The example reported in \cite{rw-improved} improves the random walk by considering relative distribution of robots among the arena so that each zone can be equally explored by a even quantity of robots.  
+
+\bigskip
+Once the robots are spread over the arena, different algorithm can be applied to map it (e.g., \textit{GMapping} that produces a two-dimensional occupancy grid of the environment). 
+
+\section{Clustering}
+
+
+
+\section{Obstacle avoidance and phototaxis}
+
+Obstacle avoidance and phototaxis tasks are two trivial tasks that represent a very basic idea and so, considered their simplicity, there are not so many ad hoc techniques and algorithms that can be applied. The implementation strongly depends on the adopted architecture (e.g., subsumption against motor schema). 
+
+\noindent
+For example, when exploiting the motor schema patterns, phototaxis and obstacle avoidance may be modeled using attractive and tangential potential fields respectively. 
+
+\noindent
+In the end, as well as the classical approaches, novel solutions have been explored by combining genetic algorithms and neural networks (as reported in \cite{obstacle-NN}).
+
+
+
