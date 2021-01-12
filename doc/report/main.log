@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=latex 2019.4.28)  12 JAN 2021 14:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=latex 2019.4.28)  12 JAN 2021 17:10
 entering extended mode
 **./main.tex
 (main.tex
@@ -643,7 +643,14 @@ File: lstlang1.sty 2019/02/27 1.8b listings language file
 
 
 Writing index file main.idx
-(main.aux)
+(main.aux
+
+LaTeX Warning: Label `obstacle-gaussian' multiply defined.
+
+
+LaTeX Warning: Label `obstacle-gaussian' multiply defined.
+
+)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
@@ -660,8 +667,8 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 47.
 LaTeX Font Info:    ... okay on input line 47.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 47.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 47.
-
-("C:\Users\Gabriele\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\ts1cmr.fd"
+ ("C:\Users\Gabriele\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\ts1cmr.fd
+"
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 47.
@@ -817,11 +824,17 @@ Make it at least 14.49998pt.
 We now make it that large for the rest of the document.
 This may cause the page layout to be inconsistent, however.
 
-[4]) (3-solution_development.tex [5] [6
+[4]
+Overfull \hbox (2.69464pt too wide) in paragraph at lines 67--68
+[]\OT1/lmr/m/n/12 Probabilistic ap-proach by us-ing non-deterministic tran-si-t
+ion among states
+ []
+
+[5]) (3-solution_development.tex [6]
+Chapter 3.
+[7
 
 ]
-Chapter 3.
-[7]
 <images/NFA.png, id=52, 634.37pt x 312.16624pt>
 File: images/NFA.png Graphic file (type png)
 <use images/NFA.png>
@@ -861,44 +874,105 @@ Underfull \hbox (badness 10000) in paragraph at lines 4--5
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 10--11
+Underfull \hbox (badness 10000) in paragraph at lines 13--15
+[]$\OT1/lmtt/m/n/12 https : / / www . researchgate . net / profile / Dr _ Anish
+ _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--15
+\OT1/lmtt/m/n/12 Pandey / publication / 317101750 _ Mobile _ Robot _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--15
+\OT1/lmtt/m/n/12 Navigation _ and _ Obstacle _ Avoidance _ Techniques _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--15
+\OT1/lmtt/m/n/12 A _ Review / links / 59266dad458515e3d45393b3 /
+ []
+
+
+Overfull \hbox (43.53952pt too wide) in paragraph at lines 13--15
+\OT1/lmtt/m/n/12 Mobile-[]Robot-[]Navigation-[]and-[]Obstacle-[]Avoidance-[]Tec
+hniques-[]A-[]Review .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 20--21
 []$\OT1/lmtt/m/n/12 http : / / anderslyhnechristensen . com / pubs / alchristen
 sen _ alifex _
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 32--33
+[]$\OT1/lmtt/m/n/12 https : / / www . sciencedirect . com / science / article /
+ pii /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 35--36
+[]$\OT1/lmtt/m/n/12 https : / / www . sciencedirect . com / science / article /
+ pii /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 38--39
+[]$\OT1/lmtt/m/n/12 https : / / link . springer . com / chapter / 10 . 1007 / 9
+78-[]3-[]319-[]21407-[]8 _
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 41--42
+[]$\OT1/lmtt/m/n/12 http : / / citeseerx . ist . psu . edu / viewdoc / download
+ ? doi = 10 . 1 . 1 .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 44--45
+[]$\OT1/lmtt/m/n/12 https : / / www . sciencedirect . com / science / article /
+ pii /
+ []
+
 ) [15
 
-] (main.aux) ) 
+] (main.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 8300 strings out of 492898
- 122638 string characters out of 3122379
- 383949 words of memory out of 3000000
- 11994 multiletter control sequences out of 15000+200000
+ 8308 strings out of 492898
+ 122797 string characters out of 3122379
+ 384949 words of memory out of 3000000
+ 12002 multiletter control sequences out of 15000+200000
  56238 words of font info for 62 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,11n,43p,637b,309s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dv
-ips/lm/lm-rmtt.enc}{C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/e
-nc/dvips/lm/lm-rm.enc}{C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/font
-s/enc/dvips/lm/lm-mathsy.enc}{C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2
-.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/Gabriele/AppData/Local/Programs/M
-iKTeX 2.9/fonts/enc/dvips/lm/lm-ts1.enc}{C:/Users/Gabriele/AppData/Local/Progra
-ms/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Gabriele/AppData/Local/Prog
-rams/MiKTeX 2.9/fonts/type1/public/lm/lmbx12.pfb><C:/Users/Gabriele/AppData/Loc
-al/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmmi12.pfb><C:/Users/Gabriele/AppD
-ata/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Gabriel
-e/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Users/G
-abriele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/U
-sers/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr7.pfb>
-<C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr8
-.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm
-/lmri12.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
-blic/lm/lmro12.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/t
-ype1/public/lm/lmsy10.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/
-fonts/type1/public/lm/lmtt12.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKT
-eX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Gabriele/AppData/Local/Progra
-ms/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (21 pages, 287821 bytes).
+ 41i,11n,43p,637b,329s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm
+tt.enc}{C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/
+lm-rm.enc}{C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/
+lm/lm-mathsy.enc}{C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/enc
+/dvips/lm/lm-mathit.enc}{C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fo
+nts/enc/dvips/lm/lm-ts1.enc}{C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.
+9/fonts/enc/dvips/base/8r.enc}<C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 
+2.9/fonts/type1/public/lm/lmbx12.pfb><C:/Users/Gabriele/AppData/Local/Programs/
+MiKTeX 2.9/fonts/type1/public/lm/lmmi12.pfb><C:/Users/Gabriele/AppData/Local/Pr
+ograms/MiKTeX 2.9/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Gabriele/AppData/Lo
+cal/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Users/Gabriele/AppD
+ata/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Users/Gabriel
+e/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr7.pfb><C:/Users/Ga
+briele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr8.pfb><C:/Use
+rs/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmri12.pfb>
+<C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmro
+12.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/
+lm/lmsy10.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/
+public/lm/lmtt12.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts
+/type1/urw/times/utmr8a.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.
+9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (21 pages, 296117 bytes).
 PDF statistics:
  135 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
