@@ -50,7 +50,7 @@ The idea is to create a probability that is directly proportional to the time sp
 The function $tanh(x)$ is the basic function used to represent such relation\footnote{A reasonable alternative would be the exponential function, but it requires the tuning few parameters so that the ``tail'' of the function take reasonable values} (figure \ref{fig:tanh}). The $Shift$ value is constant (500) so we can take the slice of the function having up concavity. The $Patience$ value is a parameter used to tone all values down. In the end, the $+1$ factor let the function have positive values.  
 
 \noindent
-Table \ref{tab:f-values} reports few reference values of the function\footonote{The values of the function may seem too much low (e.g., p(10) = 0.15\%). However, we must remind that when reaching time x, the transition has already been tested x-1 times at the previous steps, and so the probability the transition happens at most at time t should be calculated as the sum of the transition to happen in all }.
+Table \ref{tab:f-values} reports few reference values of the function.
 
 \begin{table}[H]
 \centering
