@@ -1,8 +1,8 @@
 \chapter{Solution development}
 
-\section{Total behaviour}
+\section{Behaviour design}
 
-The behavior of each robot is modeled using a non-deterministic finite state automata (\textit{NFA})(see figure \ref{fig:NFA}). Such an architecture has been chosen for the robot since its behavior is not trivial and more tasks must be executed at different times. By using a FSA, it is easy to explicitly express activities, conditions and non-deterministic transitions. Moreover, each state can be developed separately from the others, and the most suitable solution can be implemented case by case.
+The behavior of each robot is modeled using a non-deterministic finite state automata (\textit{NFA})(see figure \ref{fig:NFA}). Such an architecture has been chosen for the robot since its behavior is not trivial and more tasks must be executed at different times. By using a FSA, it is easy to explicitly express activities, conditions and non-deterministic transitions. Moreover, each state can be developed as a separated module, and the most suitable solution can be implemented case by case.
 
 \noindent
 The robot starts in the ``resting'' state. A non-deterministic transition makes the robot leave the base and start the exploration with a probability $P1$. 
@@ -37,17 +37,19 @@ In the end, a variable ``t'' stores the time spent by the robot in the current s
 
 \section{Resting}
 
-The robot in this state just checks if a transition to the exploration one should occur. The following function has been used to model the probability:
+The robot just checks if a transition to the exploration state should occur, and so no particular architectural style has been adopted for this module. The following function has been used to model the probability:
 
-\begin{center}
-$$ p = tanh((t - Shift) / Patience) + 1 $$
-\end{center} 
+\begin{equation}
+    p = tanh((t - Shift) / Patience) + 1 \tag{3.1}\label{eq:3.1}
+\end{equation}
+
+TODO: x^2 * y...?
 
 \noindent
 The idea is to create a probability that is directly proportional to the time spent in the current state using a non linear relation. Moreover, the probability should grow very slowly at the beginning so that the robot will remain in the resting state for a while. 
 
 \noindent
-The function $tanh(x)$ is the basic function used to represent such relation\footnote{A reasonable alternative would be the exponential function, but it requires the tuning few parameters so that the ``tail'' of the function take reasonable values} (figure \ref{fig:tanh}). The $Shift$ value is constant (500) so we can take the slice of the function having up concavity. The $Patience$ value is a parameter used to tone all values down. In the end, the $+1$ factor let the function have positive values.  
+The function $tanh(x)$ is the basic function used to represent such relation\footnote{A reasonable alternative would be the exponential function, but it requires the tuning few parameters so that the ``tail'' of the function take reasonable values} (figure \ref{fig:tanh}\footnote{The figure illustrates the regular \textit{tanh} function instead of the one exposed in formula \ref{eq:3.1} since the latter one, despite having a ``similar shape'', can hardly be graphically shown.}). The $Shift$ value is constant (500) so we can take the slice of the function having up concavity. The $Patience$ value is a parameter used to tone all values down. In the end, the $+1$ factor let the function have positive values.  
 
 \noindent
 Table \ref{tab:f-values} reports few reference values of the function.
@@ -72,13 +74,66 @@ t & p \\
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\linewidth]{images/tanh.png}
+\includegraphics[width=8cm, keepaspectratio]{images/tanh.png}
 \caption{\textit{A template of the expected function (left) and the regular tanh function (right).}}
 \label{fig:tanh}
 \end{figure}
 
 \section{Exploration}
 
+When exploring, the robot has a fixed probability to quit such task. Such parameter has been tuned with a very low vale (0.001) in order to avoid too much segmented behaviours where the robots keep on fluctuating just between the two states of ``exploration'' and ``returning to base''.  
+
 \section{Clustering}
 
+A robot may join/create a cluster when close to a landmark with a probability described by the following function:
+
+\begin{equation}
+    p =  \frac{(tanh((t - Shift) / Patience) + 1) * tanh(n / NeighborInfluenceLimiter)}{(NeighborInfluenceLimiter * PatienceEnhancer)} \tag{3.2}\label{eq:3.2}
+\end{equation}
+
+The probability is proportional to number of robots already in the cluster ($n$) and to the time spent exploring ($t$) both. The same formula in \ref{eq:3.1} has been used the time dependence term. 
+The parameter $NeighborInfluenceLimiter$, as the name hints, limits the influence of number of neighbors in the final result.
+
+\noindent
+The denominator is a normalization term so reasonable values can be obtained, and it can be tuned by the parameter $PatienceEnhancer$ that makes the robot wait longer as it is increased.
+
+\noindent
+Figure \ref{fig:cluster-join} reports the graph of function in \ref{eq:3.2}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{images/cluster_join.png}
+\caption{\textit{x-axis = time, y-axis = neighbors. Graph of the plot in domain [-500;0], [1;500]  showing the total trend of the function (left) so the time relation can be shown well. On the right, a zoom in in range [-500; -492], [1:10] is executed to show the dependence upon neighbors (indeed, the number of robots in the cluster will never be about the previous order of magnitude ($10^2$) , and so low values, that cannot be appreciated in the left graph, are the the ones of interest.}}
+\label{fig:cluster-join}
+\end{figure}
+
+Similarly, the probability for a robot to leave a cluster before it is completed is modeled using the following function:
+
+\begin{equation}
+    p =  \frac{(tanh((t - Shift) / Patience) + 1) / tanh(n / NeighborInfluenceLimiter)}{(NeighborInfluenceLimiter * PatienceEnhancer)} \tag{3.3}\label{eq:3.3}
+\end{equation}
+
+Formula \ref{eq:3.2} and \ref{eq:3.3} are exactly the same function except for a sign (division instead of multiplication of the two terms that model relation with time and number of neighbors). Indeed, the robot increases its probability to leave as time passes (direct proportionality) but, at the same time, its probability to leave is decreased as the number of perceived neighbors increases (inverse proportionality)(the more robots, the more probability to complete the cluster soon is the underlying reason that may lay under such behavior). 
+
+\noindent
+Figure \ref{fig:cluster-leave} reports the graph of function in \ref{eq:3.3}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{images/cluster_leave.png}
+\caption{\textit{Similal reasonings of figure \ref{fig:cluster-join}. The probability slowly increases as time passes (x-axis) and rapridly decreases as numbe of neighbors increases (y-axis).}}
+\label{fig:cluster-leave}
+\end{figure}
+
 \section{Returning to base}
+
+This state must mixes phototaxis and obstacle avoidance, and so a motor schema approach has been used to easily blend such two tasks.
+
+\smallskip
+The phototaxis capability is created by using an attractive potential field produced by the light source. Hence, the resulting force, whose direction guides to robot toward the light source, has a value inversely proportional to the perceived light.
+
+\smallskip
+The obstacle avoidance capability is created by using a tangential field around any obstacle so the robot can circumnavigate boxes or other robots. By exploiting proximity sensors, a perpendicular force ($\pi/2$ from the sensor orientation, and proportional to the proximity) is created. A possible issue is given from the boundary walls that may create local minima in some rare cases. However, such problem may be fixed by introducing a third potential field: a perpendicular one coming from the walls. Moreover, when travelling to base, the robot should not slip into any wall in most of the cases, and so the issue is not of primary importance for the time being.
+ 
+
+

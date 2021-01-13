@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=latex 2019.4.28)  12 JAN 2021 17:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=latex 2019.4.28)  13 JAN 2021 13:22
 entering extended mode
 **./main.tex
 (main.tex
@@ -847,20 +847,37 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 50.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 50.
-<images/tanh.png, id=60, 762.85pt x 352.31625pt>
+<images/tanh.png, id=60, 263.48438pt x 263.48438pt>
 File: images/tanh.png Graphic file (type png)
 <use images/tanh.png>
 Package pdftex.def Info: images/tanh.png  used on input line 75.
-(pdftex.def)             Requested size: 398.33858pt x 183.96887pt.
-) (4-performance_evaluation.tex [9 <./images/tanh.png>] [10]
-Chapter 4.
-) (5-conclusions.tex [11
+(pdftex.def)             Requested size: 227.62204pt x 227.63342pt.
+ [9]
+Overfull \hbox (0.42543pt too wide) detected at line 90
+\OML/lmm/m/it/12 p \OT1/lmr/m/n/12 = []
+ []
 
-] [12
+[10 <./images/tanh.png>]
+<images/cluster_join.png, id=71, 1244.65pt x 382.42876pt>
+File: images/cluster_join.png Graphic file (type png)
+<use images/cluster_join.png>
+Package pdftex.def Info: images/cluster_join.png  used on input line 103.
+(pdftex.def)             Requested size: 398.33858pt x 122.39136pt.
+<images/cluster_leave.png, id=72, 1064.97874pt x 313.17pt>
+File: images/cluster_leave.png Graphic file (type png)
+<use images/cluster_leave.png>
+Package pdftex.def Info: images/cluster_leave.png  used on input line 121.
+(pdftex.def)             Requested size: 398.33858pt x 117.13261pt.
+ [11 <./images/cluster_join.png>])
+(4-performance_evaluation.tex [12 <./images/cluster_leave.png>]
+Chapter 4.
+) (5-conclusions.tex [13
+
+] [14
 
 ]
 Chapter 5.
-) [13] [14
+) [15] [16
 
 ] (bibliography.tex
 LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 4.
@@ -936,7 +953,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 44--45
  pii /
  []
 
-) [15
+) [17
 
 ] (main.aux)
 
@@ -944,13 +961,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 8308 strings out of 492898
- 122797 string characters out of 3122379
+ 8325 strings out of 492898
+ 123141 string characters out of 3122379
  384949 words of memory out of 3000000
- 12002 multiletter control sequences out of 15000+200000
- 56238 words of font info for 62 fonts, out of 3000000 for 9000
+ 12016 multiletter control sequences out of 15000+200000
+ 60456 words of font info for 63 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,11n,43p,637b,329s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,11n,43p,778b,329s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm
 tt.enc}{C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/
 lm-rm.enc}{C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/
@@ -965,16 +982,17 @@ cal/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Users/Gabriele/AppD
 ata/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Users/Gabriel
 e/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr7.pfb><C:/Users/Ga
 briele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr8.pfb><C:/Use
-rs/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmri12.pfb>
-<C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmro
+rs/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmri10.pfb>
+<C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmri
 12.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/
-lm/lmsy10.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/
-public/lm/lmtt12.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts
-/type1/urw/times/utmr8a.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.
-9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (21 pages, 296117 bytes).
+lm/lmro12.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/
+public/lm/lmsy10.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts
+/type1/public/lm/lmtt12.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.
+9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Gabriele/AppData/Local/Programs/Mi
+KTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (23 pages, 761835 bytes).
 PDF statistics:
- 135 PDF objects out of 1000 (max. 8388607)
+ 149 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
