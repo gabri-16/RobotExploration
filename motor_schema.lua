@@ -1,3 +1,8 @@
+require "vector"
+
+GAIN_FACTOR = 10
+OBSTACLE_AVOIDANCE_GAIN = 5
+
 ---- Potential fields ----
 
 -- Potential field: phototaxis
@@ -6,7 +11,7 @@
 function phototaxis()
 
   max_light = 0
-  max_light_idx = -1
+  max_light_idx = 1
   for i=1, #robot.light do
     local v = robot.light[i].value
     if v > max_light then
@@ -24,20 +29,20 @@ end
 
 -- Potential field: obstacle avoidance
 -- It creates a tangential field so the robot can circumnavigate it
-function obstacle_avoidance()
-  
+function obstacle_avoidance(deviation)
   local forces = {}
   for i=1, #robot.proximity do
     local prox = robot.proximity[i]
     forces[i] = {
       length = prox.value,
-      angle = prox.angle - PI / 2 -- -PI/2 makes the perpendicular direction 
+      angle = prox.angle - deviation 
     }
   end
 
   local summation = reduce_vec2_array_polar(forces)
+
   return {
-    length = summation.length / #forces, 
+    length = summation.length / #forces * OBSTACLE_AVOIDANCE_GAIN, 
     angle = summation.angle
   }
 end

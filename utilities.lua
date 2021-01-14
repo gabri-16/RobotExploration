@@ -2,6 +2,8 @@
 
 ---- Sensors preprocessing ----
 
+OBSTACLE_THRESHOLD = 0.8 -- [0,1], 0 -> no obstacle, increasing exponentially
+
 -- Count the number of stopped robots sensed close to the items sensed on a given channel
 function count_RAB(channel, sensing_range)
   number_robot_sensed = 0
@@ -29,10 +31,10 @@ end
 
 function is_near_obstacle()
 
-  local obstacle = false
+  local obstacle = 0 -- Usage og 0-1 values since true-false create issues...
   for i=1, #robot.proximity do
-    if robot.proximity[i].value > 0.9 then 
-      obstacle = true 
+    if robot.proximity[i].value > OBSTACLE_THRESHOLD then 
+      obstacle = 1
     end
   end
   return obstacle

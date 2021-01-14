@@ -11,8 +11,6 @@ MIN_VELOCITY = -15
 MAX_VELOCITY = 15
 CRUISE_VELOCITY = 10
 
-left_v, right_v = 0 -- Velocity of left and right wheels
-
 WHEELS_DISTANCE = robot.wheels.axis_length / 2 -- 7
 PI = math.pi
 
@@ -30,7 +28,6 @@ NEIGHBOR_SENSING_RANGE = LANDMARK_SENSING_RANGE * 2 + 5
 
 -- Others 
 t = 0 -- Time elapsed in the current state
-GAIN_FACTOR = 10 -- Motor schema
 WHITE_GROUND_THRESHOLD = 0.5 -- Motor ground
 
 RECONNAISSANCE_LENGTH = 20
@@ -38,10 +35,10 @@ BIASED_EXPLORATION_LENGTH = 100
 MAX_WAIT_TIME = 10
 
 ---- States ----
-current_state = "resting" -- It will be the strating state too
+current_state = "resting" -- It will be the starting state too
 states = {}
 
--- Waiting in base and start randomly start exploration
+-- Waiting in base and randomly start exploration
 states.resting = function()
 
   local start_exploring_cond = non_deterministic_transition(start_exploring_p(t))
@@ -136,17 +133,22 @@ end
 -- Returning to base by executing phototaxis
 states.returning_base = function()
   
-  robot.range_and_bearing.set_data(NEIGHBOR_SIGNAL_CHANNEL, 1)
-
+  robot.range_and_bearing.set_data(NEIGHBOR_SIGNAL_CHANNEL, 0)
+  
   local light_force = phototaxis()
-  local obstacle_force = obstacle_avoidance()
+  --log("light " .. polar_vector_to_string(light_force))
 
-  local schemas = {light_force, obstacle_force}
+  local obstacle_force = obstacle_avoidance(PI / 2)
+  --log("obs " .. polar_vector_to_string(obstacle_force))
+  
+  local schemas = {light_force, obstacle_force} 
   local resultant = reduce_vec2_array_polar(schemas);
   resultant.length = resultant.length / #schemas * GAIN_FACTOR
+  --log("res " .. polar_vector_to_string(resultant))
+  
   velocity = restrain_velocity(to_differential_model(resultant))   
   robot.wheels.set_velocity(velocity.left, velocity.right)
-  
+   
   if in_base then
       robot.wheels.set_velocity(0, 0) 
       current_state = "resting"
@@ -162,13 +164,15 @@ function ballistic_random_walk()
 
   velocity = vector.zero()
   velocity.length = CRUISE_VELOCITY
-  velocity.angle = ternary(near_obstacle, math.rad(math.random(0, 360)), 0)
+  velocity.angle = ternary(near_obstacle > 0, math.rad(math.random(0, 360)), 0)
   return restrain_velocity(to_differential_model(velocity))
 end
 
 ---- Core ----
 
 function init()
+
+  t = 0
   robot.wheels.set_velocity(0, 0)
   robot.leds.set_all_colors(RESTING_LED_COLOR)
 end
@@ -181,7 +185,7 @@ function step()
   n_neighbors = count_RAB(NEIGHBOR_SIGNAL_CHANNEL, NEIGHBOR_SENSING_RANGE)
   
   near_obstacle = is_near_obstacle()
-  
+
   in_base = is_in_base()
   
   robot_orientation = retrieve_robot_orientation()
