@@ -1,7 +1,7 @@
 ---- Swarm intelligence ----
 
 -- Parameters --
-EXPECTED_CLUSTER_SIZE = 3
+EXPECTED_CLUSTER_SIZE = 1
 
 F_SHIFT = 500
 PATIENCE = 200
