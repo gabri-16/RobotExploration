@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=latex 2019.4.28)  13 JAN 2021 13:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=latex 2019.4.28)  15 JAN 2021 20:01
 entering extended mode
 **./main.tex
 (main.tex
@@ -633,6 +633,14 @@ Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 406.
 Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
 Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
 Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
+)
+("C:\Users\Gabriele\AppData\Local\Programs\MiKTeX 2.9\tex/latex/multirow\multir
+ow.sty"
+Package: multirow 2019/01/01 v2.4 Span multiple rows of a table
+\multirow@colwidth=\skip97
+\multirow@cntb=\count131
+\multirow@dima=\skip98
+\bigstrutjot=\dimen137
 ) (style/settings.tex
 ("C:\Users\Gabriele\AppData\Local\Programs\MiKTeX 2.9\tex/latex/listings\lstlan
 g1.sty"
@@ -653,42 +661,42 @@ LaTeX Warning: Label `obstacle-gaussian' multiply defined.
 )
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 47.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 47.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 48.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 48.
  ("C:\Users\Gabriele\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\ts1cmr.fd
 "
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 47.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 48.
  ("C:\Users\Gabriele\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\ot1lmr.fd"
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 ("C:\Users\Gabriele\AppData\Local\Programs\MiKTeX 2.9\tex/context/base/mkii\sup
 p-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count131
-\scratchdimen=\dimen137
+\scratchcounter=\count132
+\scratchdimen=\dimen138
 \scratchbox=\box62
-\nofMPsegments=\count132
-\nofMParguments=\count133
+\nofMPsegments=\count133
+\nofMParguments=\count134
 \everyMPshowfont=\toks34
-\MPscratchCnt=\count134
-\MPscratchDim=\dimen138
-\MPnumerator=\count135
-\makeMPintoPDFobject=\count136
+\MPscratchCnt=\count135
+\MPscratchDim=\dimen139
+\MPnumerator=\count136
+\makeMPintoPDFobject=\count137
 \everyMPtoPDFconversion=\toks35
 )
 ("C:\Users\Gabriele\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\epstop
@@ -752,8 +760,8 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count137
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 51.
+\c@lstlisting=\count138
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 52.
 
 ("C:\Users\Gabriele\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss\ot1ptm.f
 d"
@@ -871,13 +879,13 @@ Package pdftex.def Info: images/cluster_leave.png  used on input line 121.
  [11 <./images/cluster_join.png>])
 (4-performance_evaluation.tex [12 <./images/cluster_leave.png>]
 Chapter 4.
-) (5-conclusions.tex [13
+[13
 
-] [14
-
-]
+]) (5-conclusions.tex [14]
 Chapter 5.
-) [15] [16
+) [15
+
+] [16
 
 ] (bibliography.tex
 LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 4.
@@ -961,10 +969,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 8325 strings out of 492898
- 123141 string characters out of 3122379
- 384949 words of memory out of 3000000
- 12016 multiletter control sequences out of 15000+200000
+ 8377 strings out of 492898
+ 124023 string characters out of 3122379
+ 397672 words of memory out of 3000000
+ 12064 multiletter control sequences out of 15000+200000
  60456 words of font info for 63 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,11n,43p,778b,329s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -990,7 +998,7 @@ public/lm/lmsy10.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts
 /type1/public/lm/lmtt12.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.
 9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Gabriele/AppData/Local/Programs/Mi
 KTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (23 pages, 761835 bytes).
+Output written on main.pdf (23 pages, 766817 bytes).
 PDF statistics:
  149 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
