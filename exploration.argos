@@ -88,46 +88,30 @@
     <distribute>
       <position method="uniform" min="-2,-2,0" max="2,2,0" />
       <orientation method="uniform" min="0,0,0" max="360,0,0" />
-      <entity quantity="10" max_trials="100">
+      <entity quantity="0" max_trials="100">
         <box id="o" size="0.2, 0.2, 0.2" movable="false" />
       </entity>
     </distribute>
-   
-    <!--
-    <box id="box" size="0.2, 0.2,0.2" movable="false">
-      <body position="0.5,0.0,0" orientation="0,0,0" />
-    </box>
-    -->
     
     <!-- Robots -->
     <distribute>
-      <position method="uniform" min="-0.5,-0.5,0" max="0.5,0.5, 0" />
+      <position method="uniform" min="-0.6,-0.6,0" max="0.6,0.6, 0" />
       <orientation method="uniform" min="0,0,0" max="360,0,0" />
-      <entity quantity= "10" max_trials="100">
+      <entity quantity= "30" max_trials="100">
         <foot-bot id="fb">
           <controller config="swarm" />
         </foot-bot>
       </entity>
     </distribute>    
 
-    <foot-bot id="fb_0">
+    <!--<foot-bot id="fb_0">
        <body position="0,0,0" orientation="-90,0,0"/>
-       <controller config="swarm"/>
-    </foot-bot>
-    
- 
-<!--
-    <foot-bot id="fb_1">
-       <body position="0.2,0,0" orientation="-90,0,0"/>
-       <controller config="swarm"/>
-    </foot-bot>
-    
-    <foot-bot id="fb_2">
-       <body position="-0.2,0,0" orientation="-90,0,0"/>
        <controller config="swarm"/>
     </foot-bot>
     -->
     
+    <!-- NSWE -->
+    <!--
     <foot-bot id="landmark_N">
        <body position="1.5,0,0" orientation="0,0,0"/>
        <controller config="landmark"/>
@@ -145,6 +129,27 @@
         
      <foot-bot id="landmark_W">
        <body position="0,1.5,0" orientation="0,0,0"/>
+       <controller config="landmark"/>
+    </foot-bot>
+    -->
+    <!-- Line -->
+    <foot-bot id="landmark_1">
+       <body position="1.5,1.5,0" orientation="0,0,0"/>
+       <controller config="landmark"/>
+    </foot-bot>
+    
+     <foot-bot id="landmark_2">
+       <body position="0.5,1.5,0" orientation="0,0,0"/>
+       <controller config="landmark"/>
+    </foot-bot>
+    
+     <foot-bot id="landmark_3">
+       <body position="-0.5,1.5,0" orientation="0,0,0"/>
+       <controller config="landmark"/>
+    </foot-bot>
+        
+     <foot-bot id="landmark_4">
+       <body position="-1.5,1.5,0" orientation="0,0,0"/>
        <controller config="landmark"/>
     </foot-bot>
     

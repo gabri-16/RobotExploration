@@ -32,7 +32,6 @@ WHITE_GROUND_THRESHOLD = 0.5 -- Motor ground
 
 RECONNAISSANCE_LENGTH = 20
 BIASED_EXPLORATION_LENGTH = 100
-MAX_WAIT_TIME = 10
 
 ---- States ----
 current_state = "resting" -- It will be the starting state too
@@ -105,7 +104,6 @@ states.reconnaissance = function()
 
   t = t + 1
   
-  robot.range_and_bearing.set_data(NEIGHBOR_SIGNAL_CHANNEL, 1)
   robot.range_and_bearing.set_data(LANDMARK_EXPLORED_NOTIIFICATION_CHANNEL, 1)
   
   if t > RECONNAISSANCE_LENGTH then
@@ -119,7 +117,7 @@ states.biased_exploration = function()
 
   t = t + 1
   
-  robot.range_and_bearing.set_data(NEIGHBOR_SIGNAL_CHANNEL, 1)
+  robot.range_and_bearing.set_data(NEIGHBOR_SIGNAL_CHANNEL, 0)
   
   velocity = ballistic_random_walk()
   robot.wheels.set_velocity(velocity.left, velocity.right)
@@ -134,6 +132,7 @@ end
 states.returning_base = function()
   
   robot.range_and_bearing.set_data(NEIGHBOR_SIGNAL_CHANNEL, 0)
+  robot.range_and_bearing.set_data(LANDMARK_EXPLORED_NOTIIFICATION_CHANNEL, 0)
   
   local light_force = phototaxis()
   --log("light " .. polar_vector_to_string(light_force))

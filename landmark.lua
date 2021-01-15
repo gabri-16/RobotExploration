@@ -1,6 +1,8 @@
 require "shared_vars"
 require "utilities"
 
+t = 0
+
 -- Leds colors
 NOT_EXPLORED_LED_COLOR = "red"
 EXPLORED_LED_COLOR = "green"
@@ -17,6 +19,7 @@ states.not_explored = function()
 
   explored = count_RAB(LANDMARK_EXPLORED_NOTIIFICATION_CHANNEL, LANDMARK_SENSING_RANGE) > 0
   if (explored) then
+    log("Explored: " .. t)
     current_state = "explored"
     robot.leds.set_all_colors(EXPLORED_LED_COLOR)
   end
@@ -30,10 +33,13 @@ end
 ---- Core ----
 
 function init()
+  current_state = "not_explored"
   robot.leds.set_all_colors(NOT_EXPLORED_LED_COLOR)
+  t = 0
 end
 
 function step()
+  t = t + 1
   states[current_state]() -- Select behavior depending on the landmark state
 end
 

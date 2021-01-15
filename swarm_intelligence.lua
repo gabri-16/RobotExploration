@@ -1,7 +1,7 @@
 ---- Swarm intelligence ----
 
 -- Parameters --
-EXPECTED_CLUSTER_SIZE = 1
+EXPECTED_CLUSTER_SIZE = 3
 
 F_SHIFT = 500
 PATIENCE = 200
@@ -35,7 +35,7 @@ function leave_cluster_p(t, n)
     / (NEIGHBOR_INFLUENCE_LIMITER * PATIENCE_ENHANCER)
 end
 
--- probability to quit exploration and return to the base
+-- Probability to quit exploration and return to the base
 --
 function quit_exploring_p(t)
   return 0.001
