@@ -43,8 +43,6 @@ The robot just checks if a transition to the exploration state should occur, and
     p = tanh((t - Shift) / Patience) + 1 \tag{3.1}\label{eq:3.1}
 \end{equation}
 
-TODO: x^2 * y...?
-
 \noindent
 The idea is to create a probability that is directly proportional to the time spent in the current state using a non linear relation. Moreover, the probability should grow very slowly at the beginning so that the robot will remain in the resting state for a while. 
 

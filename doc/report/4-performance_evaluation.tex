@@ -1,1 +1,73 @@
 \chapter{Performance evaluation}
+
+The system is evaluated by checking how many landmarks are explored as time passes. A simulation is concluded when all landmarks have been explored or when time reaches a maximum allowed value (3000).
+
+\bigskip
+Few different arena layouts are used by changing the position of the landmarks. We consider three different arrangements by placing the landmarks:
+
+\begin{itemize}
+
+  \item At the four cardinal points
+  \item At the four corners of the arena
+  \item Aligned on a same side of the arena
+
+\end{itemize}
+
+The three configurations are reported in figure ?. 
+
+\smallskip
+For each arena arena, different configurations are probed by tuning the following parameters, namely:
+
+\begin{itemize}
+
+  \item Number of robots: 20, 30, 40
+  \item Expected cluster size: 1, 3, 5
+  \item Number of obstacles (boxes): 0, 10, 20
+
+\end{itemize}
+
+Table ? reports the \textit{minimum guaranteed level of service} (i.e. worst values upon the different runs) for each casuistry.
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{| c c c | c c c c |}
+
+\hline
+Robots & Cluster & Obstacles & \multicolumn{4}{ c |}{Time} \\
+\hline
+20 & 1 & 0  & 161& 258& 343& 1081 \\
+20 & 1 & 10 & 300& 329& 1705& 1931\\
+20 & 1 & 20 & 266& 370& 863& 2771\\
+20 & 3 & 0  & 559& 1231& 2730& 3000\\
+20 & 3 & 10 & 3000& 3000& 3000& 3000\\
+20 & 3 & 20 & 3000& 3000& 3000& 3000\\
+20 & 5 & 0  & 3000& 3000& 3000& 3000\\
+20 & 5 & 10 & 3000& 3000& 3000& 3000\\
+20 & 5 & 20 & 3000& 3000& 3000& 3000\\
+\hline
+30 & 1 & 0  & 115& 372& 414& 1032  \\
+30 & 1 & 10 & 234& 418& 548& 2112\\
+30 & 1 & 20 & 317& 623& 994& 3000\\
+30 & 3 & 0  & 869& 1165& 3000& 3000\\
+30 & 3 & 10 & 1449& 1962& 2981& 3000\\
+30 & 3 & 20 & 1461& 2667& 2990& 3000\\
+30 & 5 & 0  & 3000& 3000& 3000& 3000\\
+30 & 5 & 10 & & & & \\
+30 & 5 & 20 & & & & \\
+\hline
+40 & 1 & 0  & 175& 236& 367& 862\\
+40 & 1 & 10 & & & & \\
+40 & 1 & 20 & & & & \\
+40 & 3 & 0  & 833& 834& 970& 3000\\
+40 & 3 & 10 & & & & \\
+40 & 3 & 20 & & & & \\
+40 & 5 & 0  & 3000& 3000& 3000& 3000\\
+40 & 5 & 10 & & & & \\
+40 & 5 & 20 & & & & \\
+\hline
+
+\end{tabular}
+\caption{\label{tab:perf-table}\textit{Evaluation of the system on 27 proposed combinations. For each casuistry, it is reported the moment of exploration of each landmark. Every value is the worst value among the registered ones.}}
+\end{table}
+
