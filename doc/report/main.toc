@@ -6,7 +6,8 @@
 \contentsline {section}{\numberline {2.3}Obstacle avoidance}{5}% 
 \contentsline {chapter}{\numberline {3}Solution development}{7}% 
 \contentsline {section}{\numberline {3.1}Behaviour design}{7}% 
-\contentsline {section}{\numberline {3.2}Resting}{8}% 
+\contentsline {subsection}{\numberline {3.1.1}Motor schema design}{8}% 
+\contentsline {section}{\numberline {3.2}Resting}{9}% 
 \contentsline {section}{\numberline {3.3}Exploration}{10}% 
 \contentsline {section}{\numberline {3.4}Clustering}{10}% 
 \contentsline {section}{\numberline {3.5}Returning to base}{12}% 
