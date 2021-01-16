@@ -35,6 +35,46 @@ The implementation of the FSA is executed by using a ``states`` table to store t
 \noindent
 In the end, a variable ``t'' stores the time spent by the robot in the current state.
 
+\subsection{Motor schema design}
+
+When a state requires motion, its design has been developed using a motor schema approach and, once the total force suffered by the robot has been calculated, the following formula is used to switch from the translational-angular model to differential one (i.e., find the velocity of each wheel out from the direction and length of the total suffered force):    
+
+\begin{equation}
+\begin{bmatrix} 
+v_l \\
+v_r
+\end{bmatrix}
+=
+\begin{bmatrix} 
+1 & -L/2 \\
+1 & L/2
+\end{bmatrix}
+\begin{bmatrix} 
+v \\
+\omega
+\end{bmatrix}
+\tag{3.0}\label{eq:3.0}
+\end{equation}
+
+\noindent
+where:
+
+\smallskip
+\noindent
+$v_l$ = velocity of the left wheel
+
+\noindent
+$v_r$ = velocity of the right wheel
+
+\noindent
+$L$ = distance between the two wheels
+
+\noindent
+$v$ = translational velocity
+
+\noindent
+$\omega$ = angular velocity
+
 \section{Resting}
 
 The robot just checks if a transition to the exploration state should occur, and so no particular architectural style has been adopted for this module. The following function has been used to model the probability:
@@ -47,7 +87,7 @@ The robot just checks if a transition to the exploration state should occur, and
 The idea is to create a probability that is directly proportional to the time spent in the current state using a non linear relation. Moreover, the probability should grow very slowly at the beginning so that the robot will remain in the resting state for a while. 
 
 \noindent
-The function $tanh(x)$ is the basic function used to represent such relation\footnote{A reasonable alternative would be the exponential function, but it requires the tuning few parameters so that the ``tail'' of the function take reasonable values} (figure \ref{fig:tanh}\footnote{The figure illustrates the regular \textit{tanh} function instead of the one exposed in formula \ref{eq:3.1} since the latter one, despite having a ``similar shape'', can hardly be graphically shown.}). The $Shift$ value is constant (500) so we can take the slice of the function having up concavity. The $Patience$ value is a parameter used to tone all values down. In the end, the $+1$ factor let the function have positive values.  
+The function $tanh(x)$ is the basic function used to represent such relation\footnote{A reasonable alternative would be the exponential function, but it requires the tuning of few parameters so that the ``tail'' of the function take reasonable values} (figure \ref{fig:tanh}\footnote{The figure illustrates the regular \textit{tanh} function instead of the one exposed in formula \ref{eq:3.1} since the latter one, despite having a ``similar shape'', can hardly be graphically shown.}). The $Shift$ value is constant (500) so we can take the slice of the function having up concavity while dealing with positive time values. The $Patience$ value is a parameter used to tone all values down. In the end, the $+1$ factor let the function have positive values.  
 
 \noindent
 Table \ref{tab:f-values} reports few reference values of the function.
@@ -73,12 +113,15 @@ t & p \\
 \begin{figure}[H]
 \centering
 \includegraphics[width=8cm, keepaspectratio]{images/tanh.png}
-\caption{\textit{A template of the expected function (left) and the regular tanh function (right).}}
+\caption{\textit{Graph of the tanh function in range [-4;4].}}
 \label{fig:tanh}
 \end{figure}
 
 \section{Exploration}
 
+The robot executes a ballistic motion. A single potential field is created since the obstacle avoidance feature is implicitly given from the random walk itself. The direction of such potential field is randomly chosen each time an obstacle is detected, while its strength is given by a constant value ``CRUISE\_VELOCITY''. 
+
+\smallskip
 When exploring, the robot has a fixed probability to quit such task. Such parameter has been tuned with a very low vale (0.001) in order to avoid too much segmented behaviours where the robots keep on fluctuating just between the two states of ``exploration'' and ``returning to base''.  
 
 \section{Clustering}
@@ -96,12 +139,12 @@ The parameter $NeighborInfluenceLimiter$, as the name hints, limits the influenc
 The denominator is a normalization term so reasonable values can be obtained, and it can be tuned by the parameter $PatienceEnhancer$ that makes the robot wait longer as it is increased.
 
 \noindent
-Figure \ref{fig:cluster-join} reports the graph of function in \ref{eq:3.2}.
+Figure \ref{fig:cluster-join} reports the graph of the function in formula \ref{eq:3.2}.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{images/cluster_join.png}
-\caption{\textit{x-axis = time, y-axis = neighbors. Graph of the plot in domain [-500;0], [1;500]  showing the total trend of the function (left) so the time relation can be shown well. On the right, a zoom in in range [-500; -492], [1:10] is executed to show the dependence upon neighbors (indeed, the number of robots in the cluster will never be about the previous order of magnitude ($10^2$) , and so low values, that cannot be appreciated in the left graph, are the the ones of interest.}}
+\caption{\textit{x-axis = time, y-axis = number of neighbors, z-axis = probability. Graph of the plot in domain [-500;0], [1;500]  showing the total trend of the function (left) so the time relation can be shown well. On the right, a zoom in in range [-500; -492], [1:10] is executed to show the dependence upon neighbors (indeed, the number of robots in the cluster will never be about the previous order of magnitude ($10^2$) , and so low values, that cannot be appreciated in the left graph, are the the ones of interest.}}
 \label{fig:cluster-join}
 \end{figure}
 
@@ -114,7 +157,7 @@ Similarly, the probability for a robot to leave a cluster before it is completed
 Formula \ref{eq:3.2} and \ref{eq:3.3} are exactly the same function except for a sign (division instead of multiplication of the two terms that model relation with time and number of neighbors). Indeed, the robot increases its probability to leave as time passes (direct proportionality) but, at the same time, its probability to leave is decreased as the number of perceived neighbors increases (inverse proportionality)(the more robots, the more probability to complete the cluster soon is the underlying reason that may lay under such behavior). 
 
 \noindent
-Figure \ref{fig:cluster-leave} reports the graph of function in \ref{eq:3.3}.
+Figure \ref{fig:cluster-leave} reports the graph of the function in \ref{eq:3.3}.
 
 \begin{figure}[H]
 \centering
@@ -131,7 +174,7 @@ This state must mixes phototaxis and obstacle avoidance, and so a motor schema a
 The phototaxis capability is created by using an attractive potential field produced by the light source. Hence, the resulting force, whose direction guides to robot toward the light source, has a value inversely proportional to the perceived light.
 
 \smallskip
-The obstacle avoidance capability is created by using a tangential field around any obstacle so the robot can circumnavigate boxes or other robots. By exploiting proximity sensors, a perpendicular force ($\pi/2$ from the sensor orientation, and proportional to the proximity) is created. A possible issue is given from the boundary walls that may create local minima in some rare cases. However, such problem may be fixed by introducing a third potential field: a perpendicular one coming from the walls. Moreover, when travelling to base, the robot should not slip into any wall in most of the cases, and so the issue is not of primary importance for the time being.
+The obstacle avoidance capability is created by using a tangential field around any obstacle so the robot can circumnavigate boxes or other robots. By exploiting proximity sensors, a perpendicular force is created($\pi/2$ from the sensor orientation, and proportional to the proximity). A possible issue is given from the boundary walls that may create local minima in some rare cases. However, such problem may be fixed by introducing a third potential field: a perpendicular one coming from the walls. Moreover, when travelling to base, the robot should not slip into any wall in most of the cases, and so the issue is not of primary importance for the time being.
  
 
 

@@ -1,7 +1,5 @@
 \chapter{Performance evaluation}
 
-The system is evaluated by checking how many landmarks are explored as time passes. A simulation is concluded when all landmarks have been explored or when time reaches a maximum allowed value (3000).
-
 \bigskip
 Few different arena layouts are used by changing the position of the landmarks. We consider three different arrangements by placing the landmarks:
 
@@ -26,7 +24,20 @@ For each arena arena, different configurations are probed by tuning the followin
 
 \end{itemize}
 
-Table ? reports the \textit{minimum guaranteed level of service} (i.e. worst values upon the different runs) for each casuistry.
+The system is evaluated by checking how many landmarks are explored as time passes. A simulation is concluded when time reaches a maximum allowed value (3000). For example, if we have the following values:
+
+\begin{center}
+[100, 400, 800, 3000]
+\end{center}
+
+The first landmark has been explored at time 100, etc. The last one has not been explored during the simulation, and so its value is set to 3000.
+
+\noindent
+We define \textit{goodness} a quantitative metric that estimates how well the system behaves so that we can compare different combinations of parameters in a quantitative way. A given time t is associated to the number of landmarks that had already been explored in such time. Hence, starting from the four exploration times, we can model the trend of the system along the simulation using a time series. Figure ? reports a clarifier example.  
+
+
+
+Table \ref{tab:perf-table} reports the \textit{minimum guaranteed level of service} (i.e. worst values among all the executed runs) and the goodness of each casuistry.
 
 
 \begin{table}[H]
@@ -68,6 +79,6 @@ Robots & Cluster size & Obstacles & \multicolumn{4}{ c |}{Time} & Goodness \\
 \hline
 
 \end{tabular}
-\caption{\label{tab:perf-table}\textit{Evaluation of the system on 27 proposed combinations. For each casuistry, it is reported the moment of exploration of each landmark. Every value is the worst value among the registered ones.}}
+\caption{\label{tab:perf-table}\textit{Evaluation of the system on 27 proposed combinations. For each casuistry, it is reported the moment of exploration of each landmark. Every value is the worst value among the registered ones. Moreover, the goodness of each combination is reported too.}}
 \end{table}
 
