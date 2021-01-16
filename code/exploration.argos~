@@ -34,7 +34,7 @@
 	  <positioning implementation="default" noise_level="0.0" />
 	</sensors>
     
-	<params script="src/exploration.lua" />
+	<params script="./src/exploration.lua" />
 	
   </lua_controller>
 	
@@ -49,7 +49,7 @@
       <range_and_bearing implementation="medium" medium="rab" />
 	</sensors>
     
-	<params script="src/landmark.lua" />
+	<params script="./src/landmark.lua" />
 	
   </lua_controller>
   
