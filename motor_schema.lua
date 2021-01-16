@@ -62,7 +62,7 @@ end
 -- (length, angle) -> (velocity left, velocity right) 
 function to_differential_model(force)
  return {
-   left = force.length - WHEELS_DISTANCE * force.angle,
-   right = force.length + WHEELS_DISTANCE * force.angle
+   left = force.length - ROBOT_DRIVE_SHAFT * force.angle,
+   right = force.length + ROBOT_DRIVE_SHAFT * force.angle
   }
 end

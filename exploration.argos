@@ -29,7 +29,7 @@
       <differential_steering implementation="default" noise_level="0.0" />
       <footbot_motor_ground implementation="rot_z_only" />
       <footbot_light implementation="rot_z_only" show_rays="false" noise_level="0.0" />
-      <footbot_proximity implementation="default" show_rays="true" noise_level="0.0" />
+      <footbot_proximity implementation="default" show_rays="false" noise_level="0.0" />
       <range_and_bearing implementation="medium" medium="rab" />
 	  <positioning implementation="default" noise_level="0.0" />
 	</sensors>
@@ -88,58 +88,30 @@
     <distribute>
       <position method="uniform" min="-2,-2,0" max="2,2,0" />
       <orientation method="uniform" min="0,0,0" max="360,0,0" />
-      <entity quantity="0" max_trials="100">
+      <entity quantity="10" max_trials="100">
         <box id="o" size="0.2, 0.2, 0.2" movable="false" />
       </entity>
     </distribute>
     
     <!-- Robots -->
     <distribute>
-      <position method="uniform" min="-0.6,-0.6,0" max="0.6,0.6, 0" />
+      <position method="uniform" min="-0.7,-0.7,0" max="0.7, 0.7, 0" />
       <orientation method="uniform" min="0,0,0" max="360,0,0" />
-      <entity quantity= "30" max_trials="100">
+      <entity quantity= "40" max_trials="100">
         <foot-bot id="fb">
           <controller config="swarm" />
         </foot-bot>
       </entity>
     </distribute>    
-
-    <!--<foot-bot id="fb_0">
-       <body position="0,0,0" orientation="-90,0,0"/>
-       <controller config="swarm"/>
-    </foot-bot>
-    -->
     
-    <!-- NSWE -->
-    <!--
-    <foot-bot id="landmark_N">
-       <body position="1.5,0,0" orientation="0,0,0"/>
-       <controller config="landmark"/>
-    </foot-bot>
-    
-     <foot-bot id="landmark_E">
-       <body position="0,-1.5,0" orientation="0,0,0"/>
-       <controller config="landmark"/>
-    </foot-bot>
-    
-     <foot-bot id="landmark_S">
-       <body position="-1.5,0,0" orientation="0,0,0"/>
-       <controller config="landmark"/>
-    </foot-bot>
-        
-     <foot-bot id="landmark_W">
-       <body position="0,1.5,0" orientation="0,0,0"/>
-       <controller config="landmark"/>
-    </foot-bot>
-    -->
-    <!-- Line -->
+    <!-- Side -->
     <foot-bot id="landmark_1">
-       <body position="1.5,1.5,0" orientation="0,0,0"/>
+       <body position="0.5,1.5,0" orientation="0,0,0"/>
        <controller config="landmark"/>
     </foot-bot>
     
      <foot-bot id="landmark_2">
-       <body position="0.5,1.5,0" orientation="0,0,0"/>
+       <body position="1.5,1.5,0" orientation="0,0,0"/>
        <controller config="landmark"/>
     </foot-bot>
     
@@ -177,7 +149,7 @@
   <visualization>
     <qt-opengl lua_editor="false">
       <camera>
-        <placement idx="0" position="-2.0767,0.015,2.74921" look_at="-1.59254,0.015,1.87423" lens_focal_length="20" />
+        <placement idx="0" position="-3.0767,0.015,3.74921" look_at="-1.59254,0.015,1.87423" lens_focal_length="20" />
       </camera>
     </qt-opengl>
   </visualization>

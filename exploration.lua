@@ -11,7 +11,7 @@ MIN_VELOCITY = -15
 MAX_VELOCITY = 15
 CRUISE_VELOCITY = 10
 
-WHEELS_DISTANCE = robot.wheels.axis_length / 2 -- 7
+ROBOT_DRIVE_SHAFT = robot.wheels.axis_length / 2 -- 7
 PI = math.pi
 
 -- Led colors
