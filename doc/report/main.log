@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=latex 2019.4.28)  16 JAN 2021 14:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=latex 2019.4.28)  17 JAN 2021 17:24
 entering extended mode
 **./main.tex
 (main.tex
@@ -838,46 +838,71 @@ Chapter 3.
 <images/NFA.png, id=52, 634.37pt x 312.16624pt>
 File: images/NFA.png Graphic file (type png)
 <use images/NFA.png>
-Package pdftex.def Info: images/NFA.png  used on input line 28.
+Package pdftex.def Info: images/NFA.png  used on input line 30.
 (pdftex.def)             Requested size: 398.33858pt x 196.02274pt.
  [8 <./images/NFA.png>]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 90.
+(Font)              <10> on input line 92.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 90.
+(Font)              <7> on input line 92.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 90.
-<images/tanh.png, id=61, 263.48438pt x 263.48438pt>
+(Font)              <5> on input line 92.
+ [9]
+<images/tanh.png, id=67, 263.48438pt x 263.48438pt>
 File: images/tanh.png Graphic file (type png)
 <use images/tanh.png>
-Package pdftex.def Info: images/tanh.png  used on input line 115.
+Package pdftex.def Info: images/tanh.png  used on input line 117.
 (pdftex.def)             Requested size: 227.62204pt x 227.63342pt.
- [9]
-Overfull \hbox (0.42543pt too wide) detected at line 133
+ [10 <./images/tanh.png>]
+Overfull \hbox (0.42543pt too wide) detected at line 135
 \OML/lmm/m/it/12 p \OT1/lmr/m/n/12 = []
  []
 
-[10 <./images/tanh.png>]
 <images/cluster_join.png, id=72, 1244.65pt x 382.42876pt>
 File: images/cluster_join.png Graphic file (type png)
 <use images/cluster_join.png>
-Package pdftex.def Info: images/cluster_join.png  used on input line 146.
+Package pdftex.def Info: images/cluster_join.png  used on input line 148.
 (pdftex.def)             Requested size: 398.33858pt x 122.39136pt.
-<images/cluster_leave.png, id=73, 1064.97874pt x 313.17pt>
+[11 <./images/cluster_join.png>]
+<images/cluster_leave.png, id=77, 1064.97874pt x 313.17pt>
 File: images/cluster_leave.png Graphic file (type png)
 <use images/cluster_leave.png>
-Package pdftex.def Info: images/cluster_leave.png  used on input line 164.
+Package pdftex.def Info: images/cluster_leave.png  used on input line 166.
 (pdftex.def)             Requested size: 398.33858pt x 117.13261pt.
- [11 <./images/cluster_join.png>])
-(4-performance_evaluation.tex [12 <./images/cluster_leave.png>]
+ [12 <./images/cluster_leave.png>])
+(4-performance_evaluation.tex [13] [14
+
+]
 Chapter 4.
-[13
+<images/ts.png, id=89, 387.4475pt x 262.9825pt>
+File: images/ts.png Graphic file (type png)
+<use images/ts.png>
+Package pdftex.def Info: images/ts.png  used on input line 19.
+(pdftex.def)             Requested size: 227.62204pt x 154.50021pt.
+[15 <./images/ts.png>]
+<images/auc.png, id=94, 387.4475pt x 262.9825pt>
+File: images/auc.png Graphic file (type png)
+<use images/auc.png>
+Package pdftex.def Info: images/auc.png  used on input line 32.
+(pdftex.def)             Requested size: 227.62204pt x 154.50021pt.
+ [16 <./images/auc.png>]
+<images/arena.png, id=99, 377.91188pt x 283.0575pt>
+File: images/arena.png Graphic file (type png)
+<use images/arena.png>
+Package pdftex.def Info: images/arena.png  used on input line 70.
+(pdftex.def)             Requested size: 398.33858pt x 298.35938pt.
+ [17] [18 <./images/arena.png>]
+[19]
+<images/ts_all.png, id=110, 1163.34625pt x 559.08875pt>
+File: images/ts_all.png Graphic file (type png)
+<use images/ts_all.png>
+Package pdftex.def Info: images/ts_all.png  used on input line 163.
+(pdftex.def)             Requested size: 398.33858pt x 191.43555pt.
+ [20]) (5-conclusions.tex [21 <./images/ts_all.png>] [22
 
-]) (5-conclusions.tex [14]
+]
 Chapter 5.
-) [15
-
-] [16
+) [23] [24
 
 ] (bibliography.tex
 LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 4.
@@ -953,7 +978,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 44--45
  pii /
  []
 
-) [17
+) [25
 
 ] (main.aux)
 
@@ -961,13 +986,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 8329 strings out of 492898
- 123198 string characters out of 3122379
- 395949 words of memory out of 3000000
- 12020 multiletter control sequences out of 15000+200000
+ 8354 strings out of 492898
+ 123605 string characters out of 3122379
+ 397949 words of memory out of 3000000
+ 12041 multiletter control sequences out of 15000+200000
  66350 words of font info for 65 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,12n,43p,821b,329s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,12n,43p,821b,330s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm
 tt.enc}{C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/
 lm-rm.enc}{C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/
@@ -992,9 +1017,9 @@ public/lm/lmri12.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts
 KTeX 2.9/fonts/type1/public/lm/lmtt12.pfb><C:/Users/Gabriele/AppData/Local/Prog
 rams/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Gabriele/AppData/Loc
 al/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (23 pages, 773395 bytes).
+Output written on main.pdf (31 pages, 870348 bytes).
 PDF statistics:
- 154 PDF objects out of 1000 (max. 8388607)
+ 187 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 

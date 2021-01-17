@@ -2,6 +2,8 @@
 
 \section{Behaviour design}
 
+\subsection{NFA}
+
 The behavior of each robot is modeled using a non-deterministic finite state automata (\textit{NFA})(see figure \ref{fig:NFA}). Such an architecture has been chosen for the robot since its behavior is not trivial and more tasks must be executed at different times. By using a FSA, it is easy to explicitly express activities, conditions and non-deterministic transitions. Moreover, each state can be developed as a separated module, and the most suitable solution can be implemented case by case.
 
 \noindent
@@ -35,7 +37,7 @@ The implementation of the FSA is executed by using a ``states`` table to store t
 \noindent
 In the end, a variable ``t'' stores the time spent by the robot in the current state.
 
-\subsection{Motor schema design}
+\subsection{Motor schema}
 
 When a state requires motion, its design has been developed using a motor schema approach and, once the total force suffered by the robot has been calculated, the following formula is used to switch from the translational-angular model to differential one (i.e., find the velocity of each wheel out from the direction and length of the total suffered force):    
 
@@ -122,7 +124,7 @@ t & p \\
 The robot executes a ballistic motion. A single potential field is created since the obstacle avoidance feature is implicitly given from the random walk itself. The direction of such potential field is randomly chosen each time an obstacle is detected, while its strength is given by a constant value ``CRUISE\_VELOCITY''. 
 
 \smallskip
-When exploring, the robot has a fixed probability to quit such task. Such parameter has been tuned with a very low vale (0.001) in order to avoid too much segmented behaviours where the robots keep on fluctuating just between the two states of ``exploration'' and ``returning to base''.  
+When exploring, the robot has a fixed probability to quit the task. Such parameter has been tuned with a very low vale (0.001) in order to avoid too much segmented behaviours where the robots keep on fluctuating just between the two states of ``exploration'' and ``returning to base''.  
 
 \section{Clustering}
 
@@ -176,5 +178,30 @@ The phototaxis capability is created by using an attractive potential field prod
 \smallskip
 The obstacle avoidance capability is created by using a tangential field around any obstacle so the robot can circumnavigate boxes or other robots. By exploiting proximity sensors, a perpendicular force is created($\pi/2$ from the sensor orientation, and proportional to the proximity). A possible issue is given from the boundary walls that may create local minima in some rare cases. However, such problem may be fixed by introducing a third potential field: a perpendicular one coming from the walls. Moreover, when travelling to base, the robot should not slip into any wall in most of the cases, and so the issue is not of primary importance for the time being.
  
+\section{Landmark}
+
+Landmarks have been modeled using robots too\footnote{Notice that it is not a constraint nor a simplification. Any other environmental bias (black spots etc.) would also work. Robots have been chosen so that a nice graphic with landmarks status can be seen (red/green leds) and for convenience (e.g., logging, easy to move them instead of creating lots of arenas etc.)}.
+
+\noindent
+Landmarks just have two states: not explored, explored. 
+
+\noindent
+A landmark starts in the ``not explored'' state and continuously notifies all the nearby robots (see section \ref{sec:communication}).
+A permanent switch to the ``explored'' state is executed once a cluster is created nearby. In this state the landmark do not send notifications any more, and so it becomes a regular object to be just avoided.
 
 
+\section{Communication}\label{sec:communication}
+
+\smallskip
+Robots of the swarm communicate with landmarks and with other robots by using the range and bearing functionality. A total of three communication channel have been used, that is:
+
+\begin{itemize}
+
+  \item [1] \textbf{Landmark signal}: used by robots to perceive a nearby landmark.
+  \item [2] \textbf{Landmark explored notification}: used to notify a landmark that it should change its state to the ``explored'' one.
+  \item [3] \textbf{Neighbour signal}: used to count the number of sensed neighbors from the robots. 
+ 
+\end{itemize}
+
+\noindent  
+The communication range is fixed for channel [1] and [2], while it varies case by case for [3]. Indeed, notice that each robot will have its own distance under which it may join the cluster. Such value is randomly selected in a fixed range, and it is required to prevent all robots stopping at the same distance from the landmark (fact that makes the creation of big clusters difficult). 

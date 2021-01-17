@@ -6,10 +6,17 @@
 \contentsline {section}{\numberline {2.3}Obstacle avoidance}{5}% 
 \contentsline {chapter}{\numberline {3}Solution development}{7}% 
 \contentsline {section}{\numberline {3.1}Behaviour design}{7}% 
-\contentsline {subsection}{\numberline {3.1.1}Motor schema design}{8}% 
+\contentsline {subsection}{\numberline {3.1.1}NFA}{7}% 
+\contentsline {subsection}{\numberline {3.1.2}Motor schema}{8}% 
 \contentsline {section}{\numberline {3.2}Resting}{9}% 
 \contentsline {section}{\numberline {3.3}Exploration}{10}% 
-\contentsline {section}{\numberline {3.4}Clustering}{10}% 
+\contentsline {section}{\numberline {3.4}Clustering}{11}% 
 \contentsline {section}{\numberline {3.5}Returning to base}{12}% 
-\contentsline {chapter}{\numberline {4}Performance evaluation}{13}% 
-\contentsline {chapter}{\numberline {5}Conclusions}{15}% 
+\contentsline {section}{\numberline {3.6}Landmark}{13}% 
+\contentsline {section}{\numberline {3.7}Communication}{13}% 
+\contentsline {chapter}{\numberline {4}Performance evaluation}{15}% 
+\contentsline {section}{\numberline {4.1}Evaluation metrics}{15}% 
+\contentsline {section}{\numberline {4.2}Parameters definition}{16}% 
+\contentsline {section}{\numberline {4.3}Basic arena}{18}% 
+\contentsline {section}{\numberline {4.4}Further case studies}{21}% 
+\contentsline {chapter}{\numberline {5}Conclusions}{23}% 
