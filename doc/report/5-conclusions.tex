@@ -1,1 +1,9 @@
 \chapter{Conclusions}
+
+The system has been developed by mixing different well-known techniques such as finite state automata and motor schema. Moreover, the most common swarm intelligence principles have been applied too (local sensing realized through multi-channel range and bearing communication, non-deterministic state transitions with positive/negative feedbacks). The realization of few parts has been made by following the state of the art for such tasks by implementing common sense techniques (exploration for swarm robotics through random walk, obstacle avoidance though  well-known potential fields etc.). 
+
+\noindent
+In the end, the system has been evaluated upon multiple configuration of the arena and controller both by changing parameters such as the position of the landmarks, the expected cluster size and number of obstacles. It emerged that the position of landmarks and obstacles is a key factor, while the number of robot is decisive for emerging clustering behaviour.
+
+\bigskip
+Further developments may include the implementation of any different exploration strategy aside form the ballistic motion and a refinement of the modules based upon the motor schema approach by inserting a further potential field so walls of the arena are considered too. Moreover, a complete testing of the system on multiple different arenas and controller configurations may be executed so that enough data is available to apply any statistical test (or tuning strategy based on it such as the \textit{F-race} algorithm).      

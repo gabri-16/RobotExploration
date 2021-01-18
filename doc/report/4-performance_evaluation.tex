@@ -162,3 +162,59 @@ Robots & Cluster size & Obstacles & \multicolumn{4}{ c |}{Time} & Goodness \\
 
 \section{Further case studies}
 
+Now, the system is probed using a different positioning of the landmarks in order to check its robustness on different cases. In particular, while fixing the cluster size to three and the number of obstacle to ten, the system is evaluated by choosing random locations for the landmarks. Configurations are dropped when the landmarks are spawned in the base or at least two of them are too close (because of possible interferences when counting neighbors through the range and bearing system). 
+
+\noindent
+Table \ref{tab:perf-table-random} reports the observed results. As we can notice, the positioning of the landmarks is a key factor since it greatly influences the results. Indeed, the goodness assumes very high/low values depending on very lick/unlucky configurations, and so the variance between the exploration times is higher than the one observed when just using the basic arena. 
+
+\noindent
+Moreover, as expected, the system behaves better when employing the maximum number of robots (forty). 
+
+\bigskip
+When comparing such results to the ones obtained on the basic arena (figure \ref{fig:ts-random}), it emerges that better results are generally obtained on the random ones: this is probably due to the fact that, since in the basic arena all landmarks are placed on the same side, robots that start exploring the opposite part will not find any landmark for a while, and so they are vain for the first part of the simulation. Obviously, such considerations can not be made for random deployment of the landmarks in general, and so better performance are obtained since all robots take part in the creation of the clusters. In the end, notice that the clustering behavior emerges independently from the number of robots when using random arenas, while it is not true when using twenty robots on the basic arena (at least in the specified time boundaries).
+
+\bigskip
+\noindent
+\textit{Note:} Such evaluations may be tricky (or even misleading) since more attempts on further cases should be made in order to apply any statical technique to validate the results.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{| c c c | c c c c | c |}
+
+\hline
+Robots & Cluster size & Obstacles & \multicolumn{4}{ c |}{Time} & Goodness \\
+\hline
+
+\multirow{5}{4em}{20} & \multirow{5}{4em}{3} & \multirow{5}{4em}{10} & 231& 886& 2388& 3000& 0.45\\
+& & & 396& 640& 3000& 3000 & 0.41\\
+& & & 112& 975& 2645& 2871 & 0.45\\
+& & & 454& 1112& 1921& 2678 & 0.48\\
+& & & 432& 1001& 2319& 2992 & 0.43\\
+\hline
+
+\multirow{5}{4em}{30} & \multirow{5}{4em}{3} & \multirow{5}{4em}{10} & 325& 344& 1481& 1684& 0.68\\
+& & & 101& 863& 907& 3000& 0.59\\
+& & & 494& 653& 3000& 3000& 0.40\\
+& & & 575& 1166& 3000& 3000& 0.35\\
+& & & 1310& 1667& 1718& 3000& 0.40\\
+\hline
+
+\multirow{5}{4em}{40} & \multirow{5}{4em}{3} & \multirow{5}{4em}{10} & 524& 800& 815& 1060& 0.73\\
+& & & 183& 942& 2445& 2771& 0.47\\
+& & & 529& 854& 1926& 2714& 0.49\\
+& & & 960& 1278& 2167& 3000& 0.38\\
+& & & 102& 672& 719& 3000& 0.62\\
+\hline
+
+\end{tabular}
+\caption{\label{tab:perf-table-random}\textit{Evaluation of the system using random positioning of the landmarks. For each casuistry, it is reported the moment of exploration of each landmark for a random setup of the landamrks. Moreover, the goodness of each combination is reported too.}}
+\end{table} 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{images/ts_random.png}
+\caption{\textit{Comparison of the performance obtained on basic arena and on random ones.}}
+\label{fig:ts-random}
+\end{figure}
+
+
