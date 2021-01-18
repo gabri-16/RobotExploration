@@ -88,7 +88,7 @@
     <distribute>
       <position method="uniform" min="-2,-2,0" max="2,2,0" />
       <orientation method="uniform" min="0,0,0" max="360,0,0" />
-      <entity quantity="0" max_trials="100">
+      <entity quantity="10" max_trials="100">
         <box id="o" size="0.2, 0.2, 0.2" movable="false" />
       </entity>
     </distribute>
@@ -97,14 +97,16 @@
     <distribute>
       <position method="uniform" min="-0.7,-0.7,0" max="0.7, 0.7, 0" />
       <orientation method="uniform" min="0,0,0" max="360,0,0" />
-      <entity quantity= "10" max_trials="100">
+      <entity quantity= "30" max_trials="100">
         <foot-bot id="fb">
           <controller config="swarm" />
         </foot-bot>
       </entity>
     </distribute>    
     
-    <!-- Side -->
+    <!-- Landmarks -->
+
+    <!-- Side --> <!--
     <foot-bot id="landmark_1">
        <body position="0.5,1.5,0" orientation="0,0,0"/>
        <controller config="landmark"/>
@@ -124,6 +126,17 @@
        <body position="-1.5,1.5,0" orientation="0,0,0"/>
        <controller config="landmark"/>
     </foot-bot>
+    -->
+    <!-- Random -->
+    <distribute>
+      <position method="uniform" min="-1.9, -1.9,0" max="1.9, 1.9, 0" />
+      <orientation method="uniform" min="0,0,0" max="360,0,0" />
+      <entity quantity= "4" max_trials="100">
+        <foot-bot id="lm">
+          <controller config="landmark" />
+        </foot-bot>
+      </entity>
+    </distribute>  
     
   </arena>
  
