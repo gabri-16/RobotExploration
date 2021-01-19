@@ -9,3 +9,5 @@ cd code
 argos3 -c exploration.argos
 ```
 The behavior of swarm robots and landmarks are contained in ```exploration.lua``` and ```landmark.lua``` files respectively (```code``` directory).
+
+The file ```performance.ipynb``` is a pyhton notebook containing few simple tools to analyze performance data.
