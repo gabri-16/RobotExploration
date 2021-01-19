@@ -22,7 +22,7 @@ Figure \ref{fig:ts} reports a clarifier example of a time series.
 \end{figure}
 
 \smallskip
-Moreover, we define a measure of performance (\textit{goodness}) to estimate how well the system behaves so that we can compare different combinations of parameters in a quantitative way. To do this, we consider the area under the time series (i.e., the integral of the function). Such area can assume values in range [0; 12000] (0 if no landmark has been explored during the simulation, 12000 is a theoretical max value given by $simulation\_length * n\_landmarks$). The main idea is that the greater the area, the sooner landmarks had been explored. Notice that, each value is then normalized in [0;1] for convenience.
+Moreover, we define a measure of performance (\textit{goodness}) to estimate how well the system behaves so that we can compare different combinations of parameters in a quantitative way. To do this, we consider the area under the time series (i.e., the integral of the function). Such area can assume values in range [0; 12000] (0 if no landmark has been explored during the simulation, 12000 is a theoretical max value given by $simulation\_length * n\_landmarks$). The main idea is that the greater the area, the sooner landmarks had been explored, and so higher values of goodness are preferred. Notice that, each value is then normalized in [0;1] for convenience.
 
 \noindent 
 Figure \ref{fig:auc} reports a clarifier example of lower and upper bounds.  
@@ -30,7 +30,7 @@ Figure \ref{fig:auc} reports a clarifier example of lower and upper bounds.
 \begin{figure}[H]
 \centering
 \includegraphics[width=8cm, keepaspectratio]{images/auc.png}
-\caption{\textit{Example time series with exploration times [500, 1000, 1300, 3000] (green). Upper and bound bounds in orange and blue respectively. The integral of the blue function is simply 0, while the one of the orange is given by 3000 * 4.}}
+\caption{\textit{Example time series with exploration times [500, 1000, 1300, 3000] (green). Upper and lower bounds in orange and blue respectively. The integral of the blue function is simply 0, while the one of the orange is given by 3000 * 4.}}
 \label{fig:auc}
 \end{figure}
 
@@ -74,7 +74,7 @@ The first analyzed setup of the arena is reported in figure \ref{fig:arena}. The
 
 \section{Basic arena}
 
-When considering the basic setup of the arena, table \ref{tab:perf-table} reports the \textit{minimum guaranteed level of service} (i.e. worst values among all the executed runs) and the goodness of each casuistry. Figure \ref{fig:ts-all} shows the comparison of the cases reported in table \ref{tab:perf-table}.
+When considering the basic setup of the arena, table \ref{tab:perf-table} reports the \textit{minimum guaranteed level of service} (i.e. worst observed values) upon 5 runs and the relative goodness of each casuistry. Figure \ref{fig:ts-all} shows the comparison of the cases reported in table \ref{tab:perf-table}.
 
 \bigskip
 \noindent
@@ -84,7 +84,7 @@ An increase in the number of robots improves the overall performance values in g
 Indeed, we can notice that the system can not reach the goal using cluster size three just when using twenty robots. Moreover, we obtain the best results when using the maximum number of robots (forty).
 However, when dealing with an higher number of robots than forty and if keeping the same size of the arena, they may disturb each other, and so further evaluations should be made and no general rule can be inferred. 
 
-Besides, notice that the minimum guaranteed level of service can be tricky. Indeed, by looking to raw performance data (available in attached files), it is confirmed that better average performance values are obtained despite a same minimum guaranteed level of service for cluster size five.
+Besides, notice that the minimum guaranteed level of service can be tricky. Indeed, by looking to raw performance data (available in attached files), it is confirmed that better average performance values are obtained as the number of robot increases, despite, in some cases, a same minimum guaranteed level of service.
 
 \bigskip
 \noindent
@@ -165,7 +165,7 @@ Robots & Cluster size & Obstacles & \multicolumn{4}{ c |}{Time} & Goodness \\
 Now, the system is probed using a different positioning of the landmarks in order to check its robustness on different cases. In particular, while fixing the cluster size to three and the number of obstacle to ten, the system is evaluated by choosing random locations for the landmarks. Configurations are dropped when the landmarks are spawned in the base or at least two of them are too close (because of possible interferences when counting neighbors through the range and bearing system). 
 
 \noindent
-Table \ref{tab:perf-table-random} reports the observed results. As we can notice, the positioning of the landmarks is a key factor since it greatly influences the results. Indeed, the goodness assumes very high/low values depending on very lick/unlucky configurations, and so the variance between the exploration times is higher than the one observed when just using the basic arena. 
+Table \ref{tab:perf-table-random} reports the observed results. As we can notice, the positioning of the landmarks is a key factor since it greatly influences the results. Indeed, the goodness assumes very high/low values depending on very lucky/unlucky configurations, and so the variance between the exploration times is higher than the one observed when just using the basic arena. 
 
 \noindent
 Moreover, as expected, the system behaves better when employing the maximum number of robots (forty). 
@@ -207,7 +207,7 @@ Robots & Cluster size & Obstacles & \multicolumn{4}{ c |}{Time} & Goodness \\
 \hline
 
 \end{tabular}
-\caption{\label{tab:perf-table-random}\textit{Evaluation of the system using random positioning of the landmarks. For each casuistry, it is reported the moment of exploration of each landmark for a random setup of the landamrks. Moreover, the goodness of each combination is reported too.}}
+\caption{\label{tab:perf-table-random}\textit{Evaluation of the system using random positioning of the landmarks. For each casuistry, it is reported the moment of exploration of each landmark for five random setups of the landmarks. Moreover, the goodness of each combination is reported too.}}
 \end{table} 
 
 \begin{figure}[H]

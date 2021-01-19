@@ -23,7 +23,7 @@ When returning to the base, the robot executes a phototaxis task. The robot ente
 
 \noindent
 In the end, the robot may leave the cluster before it is completed with a probability $P4$. In this case, it enters in the ``biased exploration" state, that is a state where the robot executes the regular exploration tasks
-but with inhibited stimuli from landmarks. After $t_2$ seconds it returns in the normal exploration behaviour. Such a intermediate state is required so that the robot may step away from the landmark (otherwise, even though it is a probabilistic transition, it would join the cluster again in most of the cases). TODO: required?  
+but with inhibited stimuli from landmarks. After $t_2$ seconds it returns in the normal exploration behaviour. Such a intermediate state is required so that the robot may step away from the landmark (otherwise, even though it is a probabilistic transition, it may join the cluster again suddenly.  
 
 \begin{figure}[H]
 \centering
@@ -32,7 +32,7 @@ but with inhibited stimuli from landmarks. After $t_2$ seconds it returns in the
 \label{fig:NFA}
 \end{figure}
 
-The implementation of the FSA is executed by using a ``states`` table to store the code be executed in each state. The variable ``current\_state'' represents the current active state, while transition are executed by checking simple``if-then-else'' conditions.
+The implementation of the FSA is executed by using a ``states'' table to store the code be executed in each state. The variable ``current\_state'' represents the current active state, while transition are executed by checking simple``if-then-else'' conditions.
 
 \noindent
 In the end, a variable ``t'' stores the time spent by the robot in the current state.
@@ -156,7 +156,7 @@ Similarly, the probability for a robot to leave a cluster before it is completed
     p =  \frac{(tanh((t - Shift) / Patience) + 1) / tanh(n / NeighborInfluenceLimiter)}{(NeighborInfluenceLimiter * PatienceEnhancer)} \tag{3.3}\label{eq:3.3}
 \end{equation}
 
-Formula \ref{eq:3.2} and \ref{eq:3.3} are exactly the same function except for a sign (division instead of multiplication of the two terms that model relation with time and number of neighbors). Indeed, the robot increases its probability to leave as time passes (direct proportionality) but, at the same time, its probability to leave is decreased as the number of perceived neighbors increases (inverse proportionality)(the more robots, the more probability to complete the cluster soon is the underlying reason that may lay under such behavior). 
+Formula \ref{eq:3.2} and \ref{eq:3.3} are exactly the same function except for a sign (division instead of multiplication of the two terms that model relation with time and number of neighbors). Indeed, the robot increases its probability to leave as time passes (direct proportionality) but, at the same time, its probability to leave is decreased as the number of perceived neighbors increases (inverse proportionality)(the more robots, the more probability to complete the cluster sooner is the reason that may lay under such behavior). 
 
 \noindent
 Figure \ref{fig:cluster-leave} reports the graph of the function in \ref{eq:3.3}.
@@ -164,19 +164,22 @@ Figure \ref{fig:cluster-leave} reports the graph of the function in \ref{eq:3.3}
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{images/cluster_leave.png}
-\caption{\textit{Similal reasonings of figure \ref{fig:cluster-join}. The probability slowly increases as time passes (x-axis) and rapridly decreases as numbe of neighbors increases (y-axis).}}
+\caption{\textit{Similar reasonings of figure \ref{fig:cluster-join}. The probability slowly increases as time passes (x-axis) and rapridly decreases as numbe of neighbors increases (y-axis).}}
 \label{fig:cluster-leave}
 \end{figure}
 
 \section{Returning to base}
 
-This state must mixes phototaxis and obstacle avoidance, and so a motor schema approach has been used to easily blend such two tasks.
+This state mixes phototaxis and obstacle avoidance, and so a motor schema approach has been used to easily blend such two tasks.
 
 \smallskip
 The phototaxis capability is created by using an attractive potential field produced by the light source. Hence, the resulting force, whose direction guides to robot toward the light source, has a value inversely proportional to the perceived light.
 
 \smallskip
-The obstacle avoidance capability is created by using a tangential field around any obstacle so the robot can circumnavigate boxes or other robots. By exploiting proximity sensors, a perpendicular force is created($\pi/2$ from the sensor orientation, and proportional to the proximity). A possible issue is given from the boundary walls that may create local minima in some rare cases. However, such problem may be fixed by introducing a third potential field: a perpendicular one coming from the walls. Moreover, when travelling to base, the robot should not slip into any wall in most of the cases, and so the issue is not of primary importance for the time being.
+The obstacle avoidance capability is created by using a tangential field around any obstacle so the robot can circumnavigate boxes or other robots. By exploiting proximity sensors, a perpendicular force is created ($\pi/2$ from the sensor orientation, and proportional to the proximity). 
+
+\noindent
+A possible issue is given from the boundary walls that may create local minima in some rare cases, but such problem may be fixed by introducing a third potential field: a perpendicular one coming from the walls. However, when travelling to base, the robot should not slip into any wall in most of the cases, and so the issue is not of primary importance for the time being.
  
 \section{Landmark}
 
@@ -193,7 +196,7 @@ A permanent switch to the ``explored'' state is executed once a cluster is creat
 \section{Communication}\label{sec:communication}
 
 \smallskip
-Robots of the swarm communicate with landmarks and with other robots by using the range and bearing functionality. A total of three communication channel have been used, that is:
+Robots of the swarm communicate with landmarks and with other robots by using the range and bearing functionality. A total of three communication channels have been used, that is:
 
 \begin{itemize}
 

@@ -1,0 +1,23 @@
+\chapter{Project goal}
+
+Few landmarks are scattered around the arena, and the main goal is to explore them all using swarm robotics techniques (non-deterministic transitions between executed tasks, local sensing, low computational power of each robot etc.). Each landmark should be explored exactly once.
+
+\noindent
+All robots are initially located in a base placed somewhere in the arena. The base is identified by a black spot on the ground, and a light source is placed above it.
+
+\noindent
+A robot randomly starts exploring the arena and, when a landmark is detected, it may stop in order to create/join a cluster around such landmark. The probability to start the exploration depends upon the time spent resting. 
+
+\noindent
+When a cluster is complete, the robots return to the base by executing phototaxis after a short phase of recognition (that would be the phase where the robots should actually explore and map the landmark surrounding area, but in this project it will be mocked for simplicity). The probability of a robot to join the cluster depends upon two parameters, i.e. the number of the robots that already joined the cluster and the time spent doing the current task (exploration).
+
+\noindent
+A robot may leave a joined cluster randomly before it is completed depending on the two same aforementioned parameters (number of neighbors, time already spent in the cluster).
+
+
+
+\noindent
+A robot may quit the exploration task randomly and return to the base. The probability to end such task is proportional to the spent exploration time. 
+
+\noindent
+In the end, few obstacles may be distributed in the arena, and so an obstacle avoidance activity must be executed along all the robot lifetime. Such task includes avoidance of any obstacle (walls and boxes as well as other robots and landmarks).        

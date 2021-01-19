@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=latex 2019.4.28)  18 JAN 2021 20:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=latex 2019.4.28)  19 JAN 2021 19:02
 entering extended mode
 **./main.tex
 (main.tex
@@ -1006,7 +1006,7 @@ Here is how much of TeX's memory you used:
  12094 multiletter control sequences out of 15000+200000
  66350 words of font info for 65 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,12n,43p,918b,330s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,12n,43p,918b,332s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm
 tt.enc}{C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/
 lm-rm.enc}{C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/
@@ -1031,7 +1031,7 @@ public/lm/lmri12.pfb><C:/Users/Gabriele/AppData/Local/Programs/MiKTeX 2.9/fonts
 KTeX 2.9/fonts/type1/public/lm/lmtt12.pfb><C:/Users/Gabriele/AppData/Local/Prog
 rams/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Gabriele/AppData/Loc
 al/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (31 pages, 903517 bytes).
+Output written on main.pdf (31 pages, 903599 bytes).
 PDF statistics:
  189 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
